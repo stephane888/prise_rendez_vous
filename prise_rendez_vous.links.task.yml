@@ -1,0 +1,26 @@
+# Disable periode entity routing definition
+dis_period_entity.settings_tab:
+  route_name: dis_period_entity.settings
+  title: 'Settings'
+  base_route: dis_period_entity.settings
+
+entity.dis_period_entity.canonical:
+  route_name: entity.dis_period_entity.canonical
+  base_route: entity.dis_period_entity.canonical
+  title: 'View'
+
+entity.dis_period_entity.edit_form:
+  route_name: entity.dis_period_entity.edit_form
+  base_route: entity.dis_period_entity.canonical
+  title: 'Edit'
+
+entity.dis_period_entity.version_history:
+  route_name: entity.dis_period_entity.version_history
+  base_route: entity.dis_period_entity.canonical
+  title: 'Revisions'
+
+entity.dis_period_entity.delete_form:
+  route_name:  entity.dis_period_entity.delete_form
+  base_route:  entity.dis_period_entity.canonical
+  title: Delete
+  weight: 10

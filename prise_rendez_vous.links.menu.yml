@@ -12,3 +12,17 @@ entity.rdv_config_entity.collection:
   description: 'List Rdv config entity (bundles)'
   parent: system.admin_structure
   weight: 99
+
+# Disable periode entity menu items definition
+entity.dis_period_entity.collection:
+  title: 'Disable periode entity list'
+  route_name: entity.dis_period_entity.collection
+  description: 'List Disable periode entity entities'
+  parent: system.admin_structure
+  weight: 100
+
+dis_period_entity.admin.structure.settings:
+  title: 'Disable periode entity settings'
+  description: 'Configure Disable periode entity entities'
+  route_name: dis_period_entity.settings
+  parent: system.admin_structure

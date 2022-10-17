@@ -3,3 +3,8 @@ entity.rdv_config_entity.add_form:
   title: 'Add Rdv config entity'
   appears_on:
     - entity.rdv_config_entity.collection
+entity.dis_period_entity.add_form:
+  route_name: entity.dis_period_entity.add_form
+  title: 'Add Disable periode entity'
+  appears_on:
+    - entity.dis_period_entity.collection

@@ -2,3 +2,34 @@ administer prise_rendez_vous configuration:
   title: 'Administer prise_rendez_vous configuration'
   description: 'Optional description.'
   restrict access: true
+add disable periode entity entities:
+  title: 'Create new Disable periode entity entities'
+
+administer disable periode entity entities:
+  title: 'Administer Disable periode entity entities'
+  description: 'Allow to access the administration form to configure Disable periode entity entities.'
+  restrict access: true
+
+delete disable periode entity entities:
+  title: 'Delete Disable periode entity entities'
+
+edit disable periode entity entities:
+  title: 'Edit Disable periode entity entities'
+
+view published disable periode entity entities:
+  title: 'View published Disable periode entity entities'
+
+view unpublished disable periode entity entities:
+  title: 'View unpublished Disable periode entity entities'
+
+view all disable periode entity revisions:
+  title: 'View all Disable periode entity revisions'
+
+revert all disable periode entity revisions:
+  title: 'Revert all Disable periode entity revisions'
+  description: 'Role requires permission <em>view Disable periode entity revisions</em> and <em>edit rights</em> for disable periode entity entities in question or <em>administer disable periode entity entities</em>.'
+
+delete all disable periode entity revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Disable periode entity revisions</em> and <em>delete rights</em> for disable periode entity entities in question or <em>administer disable periode entity entities</em>.'
+
