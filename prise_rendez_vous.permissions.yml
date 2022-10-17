@@ -33,3 +33,34 @@ delete all disable periode entity revisions:
   title: 'Delete all revisions'
   description: 'Role requires permission to <em>view Disable periode entity revisions</em> and <em>delete rights</em> for disable periode entity entities in question or <em>administer disable periode entity entities</em>.'
 
+add submit rdv entity entities:
+  title: 'Create new Submit rdv entity entities'
+
+administer submit rdv entity entities:
+  title: 'Administer Submit rdv entity entities'
+  description: 'Allow to access the administration form to configure Submit rdv entity entities.'
+  restrict access: true
+
+delete submit rdv entity entities:
+  title: 'Delete Submit rdv entity entities'
+
+edit submit rdv entity entities:
+  title: 'Edit Submit rdv entity entities'
+
+view published submit rdv entity entities:
+  title: 'View published Submit rdv entity entities'
+
+view unpublished submit rdv entity entities:
+  title: 'View unpublished Submit rdv entity entities'
+
+view all submit rdv entity revisions:
+  title: 'View all Submit rdv entity revisions'
+
+revert all submit rdv entity revisions:
+  title: 'Revert all Submit rdv entity revisions'
+  description: 'Role requires permission <em>view Submit rdv entity revisions</em> and <em>edit rights</em> for submit rdv entity entities in question or <em>administer submit rdv entity entities</em>.'
+
+delete all submit rdv entity revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Submit rdv entity revisions</em> and <em>delete rights</em> for submit rdv entity entities in question or <em>administer submit rdv entity entities</em>.'
+

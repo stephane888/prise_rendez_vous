@@ -24,3 +24,29 @@ entity.dis_period_entity.delete_form:
   base_route:  entity.dis_period_entity.canonical
   title: Delete
   weight: 10
+# Submit rdv entity routing definition
+submit_rdv_entity.settings_tab:
+  route_name: submit_rdv_entity.settings
+  title: 'Settings'
+  base_route: submit_rdv_entity.settings
+
+entity.submit_rdv_entity.canonical:
+  route_name: entity.submit_rdv_entity.canonical
+  base_route: entity.submit_rdv_entity.canonical
+  title: 'View'
+
+entity.submit_rdv_entity.edit_form:
+  route_name: entity.submit_rdv_entity.edit_form
+  base_route: entity.submit_rdv_entity.canonical
+  title: 'Edit'
+
+entity.submit_rdv_entity.version_history:
+  route_name: entity.submit_rdv_entity.version_history
+  base_route: entity.submit_rdv_entity.canonical
+  title: 'Revisions'
+
+entity.submit_rdv_entity.delete_form:
+  route_name:  entity.submit_rdv_entity.delete_form
+  base_route:  entity.submit_rdv_entity.canonical
+  title: Delete
+  weight: 10

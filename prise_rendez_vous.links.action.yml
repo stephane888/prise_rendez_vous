@@ -8,3 +8,8 @@ entity.dis_period_entity.add_form:
   title: 'Add Disable periode entity'
   appears_on:
     - entity.dis_period_entity.collection
+entity.submit_rdv_entity.add_form:
+  route_name: entity.submit_rdv_entity.add_form
+  title: 'Add Submit rdv entity'
+  appears_on:
+    - entity.submit_rdv_entity.collection
