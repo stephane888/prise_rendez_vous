@@ -1,0 +1,14 @@
+{
+    "name": "stephane888/prise_rendez_vous",
+    "description": "prise de rendez vous",
+    "type": "drupal-custom-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kouwa stephane",
+            "email": "kksasteph888@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
