@@ -1,0 +1,4 @@
+administer prise_rendez_vous configuration:
+  title: 'Administer prise_rendez_vous configuration'
+  description: 'Optional description.'
+  restrict access: true

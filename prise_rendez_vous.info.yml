@@ -1,0 +1,5 @@
+name: prise rendez vous
+type: module
+description: Permet la prise de rendez vous
+package: Custom
+core_version_requirement: ^9 || ^10

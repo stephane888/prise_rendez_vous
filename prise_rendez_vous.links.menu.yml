@@ -1,0 +1,14 @@
+prise_rendez_vous.settings_form:
+  title: 'prise rendez vous'
+  description: 'Configure prise rendez vous.'
+  parent: system.admin_config_system
+  route_name: prise_rendez_vous.settings_form
+  weight: 10
+
+# Rdv config entity menu items definition
+entity.rdv_config_entity.collection:
+  title: 'Rdv config entity'
+  route_name: entity.rdv_config_entity.collection
+  description: 'List Rdv config entity (bundles)'
+  parent: system.admin_structure
+  weight: 99

@@ -1,0 +1,8 @@
+# Schema for the configuration files of the prise rendez vous module.
+prise_rendez_vous.settings:
+  type: config_object
+  label: 'prise rendez vous settings'
+  mapping:
+    example:
+      type: string
+      label: 'Example'

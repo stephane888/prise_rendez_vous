@@ -1,0 +1,12 @@
+prise_rendez_vous.rdv_config_entity.*:
+  type: config_entity
+  label: 'Rdv config entity config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

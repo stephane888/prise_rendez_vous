@@ -1,0 +1,5 @@
+entity.rdv_config_entity.add_form:
+  route_name: entity.rdv_config_entity.add_form
+  title: 'Add Rdv config entity'
+  appears_on:
+    - entity.rdv_config_entity.collection
