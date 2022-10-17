@@ -10,3 +10,21 @@ prise_rendez_vous.rdv_config_entity.*:
       label: 'Label'
     uuid:
       type: string
+    format_time:
+      type: format_time
+      label: 'Le format de durée ( minutes, heures, jours )'
+    jours:
+      type: mapping
+      label: 'Liste de jour de la semaine'
+    interval:
+      type: integer
+      label: "interval/durée d'un creneau"
+    decalage:
+      type: integer
+      label: " Decallage entre deux creneaux"
+    number_week:
+      type: integer
+      label: " Nombre de semaine à afficher "
+    limit_reservation:
+      type: integer
+      label: " Nombre de reservation par creneaux "
