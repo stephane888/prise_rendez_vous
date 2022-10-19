@@ -1,0 +1,4 @@
+services:
+  prise_rendez_vous.manage.basic:
+    class: Drupal\prise_rendez_vous\Services\PriseRendezVousSimple
+    arguments: []

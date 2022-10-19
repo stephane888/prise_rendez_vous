@@ -40,3 +40,17 @@ submit_rdv_entity.admin.structure.settings:
   description: 'Configure Submit rdv entity entities'
   route_name: submit_rdv_entity.settings
   parent: system.admin_structure
+
+# Equipes entity menu items definition
+entity.equipes_entity.collection:
+  title: 'Equipes entity list'
+  route_name: entity.equipes_entity.collection
+  description: 'List Equipes entity entities'
+  parent: system.admin_structure
+  weight: 100
+
+equipes_entity.admin.structure.settings:
+  title: 'Equipes entity settings'
+  description: 'Configure Equipes entity entities'
+  route_name: equipes_entity.settings
+  parent: system.admin_structure

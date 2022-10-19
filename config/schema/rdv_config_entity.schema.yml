@@ -28,3 +28,12 @@ prise_rendez_vous.rdv_config_entity.*:
     limit_reservation:
       type: integer
       label: " Nombre de reservation par creneaux "
+      
+      
+node.type.*.third_party.prise_rendez_vous:
+  type: mapping
+  label: 'Prise de RDV'
+  mapping:
+    prise_rendez_vous_enabled:
+      type: boolean
+      label: 'Whether to enable the reusable forms on this node type'

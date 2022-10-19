@@ -1,6 +1,97 @@
 <?php
 
 /**
+ *
  * @file
  * Primary module hooks for prise rendez vous module.
  */
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeTypeInterface;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function prise_rendez_vous_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
+  $form['prise_rdv'] = array(
+    '#type' => 'details',
+    '#title' => t(' Prise de rendez vous '),
+    '#group' => 'additional_settings'
+  );
+
+  // Load the current node type configuration entity.
+  $node_type = $form_state->getFormObject()->getEntity();
+  //
+  $form['prise_rdv']['prise_rendez_vous_enabled'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Activé la prise en chage de RDV.'),
+    '#default_value' => $node_type->getThirdPartySetting('prise_rendez_vous', 'prise_rendez_vous_enabled', 0)
+  );
+  //
+  $form['prise_rdv']['text'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'p',
+    '#value' => " Vous pourriez configurer un rendez-vous pour chaque contenu ",
+    '#states' => [
+      'visible' => [
+        ':input[name="prise_rendez_vous_enabled"]' => [
+          'checked' => TRUE
+        ]
+      ]
+    ]
+  ];
+
+  $form['#entity_builders'][] = 'prise_rendez_vous_form_node_type_form_builder';
+}
+
+function prise_rendez_vous_form_node_type_form_builder($entity_type, NodeTypeInterface $type, &$form, FormStateInterface $form_state) {
+  // dd($form_state->getValues());
+  if ($form_state->getValue('prise_rendez_vous_enabled') === 1) {
+    $type->setThirdPartySetting('prise_rendez_vous', 'prise_rendez_vous_enabled', 1);
+    return 1;
+  }
+  $type->unsetThirdPartySetting('prise_rendez_vous', 'prise_rendez_vous_enabled');
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function prise_rendez_vous_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  /**
+   *
+   * @var \Drupal\node\NodeForm $entity
+   */
+  $FormObject = $form_state->getFormObject();
+
+  /**
+   *
+   * @var \Drupal\node\Entity\Node $entity
+   */
+  $entity = $FormObject->getEntity();
+  $nodeType = \Drupal\node\Entity\NodeType::load($entity->getType());
+  $ThirdPartySettings = $nodeType->getThirdPartySettings('prise_rendez_vous');
+  /**
+   * On ajoute un bouton dans le formulaire afin de permettre de rediriger vers
+   * une page d'edition de rdv.
+   */
+  if (!empty($ThirdPartySettings['prise_rendez_vous_enabled'])) {
+    $form['actions']['sava_redirect_rdv'] = $form['actions']['submit'];
+    $form['actions']['sava_redirect_rdv']['#submit'][] = '_prise_rendez_vous_submitRedirectRdvForm';
+    $form['actions']['sava_redirect_rdv']['#value'] = 'Enregistrer et configurer les prises de rendez-vous';
+  }
+}
+
+function _prise_rendez_vous_submitRedirectRdvForm(&$form, FormStateInterface $form_state) {
+  /**
+   *
+   * @var \Drupal\node\NodeForm $nodeForm
+   */
+  $nodeForm = $form_state->getFormObject();
+  // on empeche drupal de faire une redirection via destination.
+  \Drupal::request()->query->remove('destination');
+  $form_state->setRedirect("prise_rendez_vous.manager", [
+    'entity_type_id' => 'node',
+    'id' => $nodeForm->getEntity()->id()
+  ]);
+}
+
+

@@ -10,6 +10,8 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityPublishedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 
 /**
  * Defines the Disable periode entity entity.
@@ -53,11 +55,11 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "published" = "status",
  *   },
-*   revision_metadata_keys = {
-*     "revision_user" = "revision_uid",
-*     "revision_created" = "revision_timestamp",
-*     "revision_log_message" = "revision_log"
-*   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_uid",
+ *     "revision_created" = "revision_timestamp",
+ *     "revision_log_message" = "revision_log"
+ *   },
  *   links = {
  *     "canonical" = "/admin/structure/dis_period_entity/{dis_period_entity}",
  *     "add-form" = "/admin/structure/dis_period_entity/add",
@@ -79,16 +81,18 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   use EntityPublishedTrait;
 
   /**
+   *
    * {@inheritdoc}
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += [
-      'user_id' => \Drupal::currentUser()->id(),
+      'user_id' => \Drupal::currentUser()->id()
     ];
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   protected function urlRouteParameters($rel) {
@@ -105,6 +109,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
@@ -127,6 +132,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function getName() {
@@ -134,6 +140,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function setName($name) {
@@ -142,6 +149,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function getCreatedTime() {
@@ -149,6 +157,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function setCreatedTime($timestamp) {
@@ -157,6 +166,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function getOwner() {
@@ -164,6 +174,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function getOwnerId() {
@@ -171,6 +182,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function setOwnerId($uid) {
@@ -179,6 +191,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function setOwner(UserInterface $account) {
@@ -187,6 +200,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -195,73 +209,92 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
     // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);
 
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Disable periode entity entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Authored by'))->setDescription(t('The user ID of author of the Disable periode entity entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'user')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'author',
+      'weight' => 0
+    ])->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => ''
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Disable periode entity entity.'))
-      ->setRevisionable(TRUE)
-      ->setSettings([
-        'max_length' => 50,
-        'text_processing' => 0,
-      ])
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'string_textfield',
-        'weight' => -4,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE)
-      ->setRequired(TRUE);
+    $fields['name'] = BaseFieldDefinition::create('string')->setLabel(t('Name'))->setDescription(t('The name of the Disable periode entity entity.'))->setRevisionable(TRUE)->setSettings([
+      'max_length' => 50,
+      'text_processing' => 0
+    ])->setDefaultValue('')->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -10
+    ])->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -10
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
 
-    $fields['status']->setDescription(t('A boolean indicating whether the Disable periode entity is published.'))
-      ->setDisplayOptions('form', [
-        'type' => 'boolean_checkbox',
-        'weight' => -3,
-      ]);
+    $fields['status']->setDescription(t('A boolean indicating whether the Disable periode entity is published.'))->setDisplayOptions('form', [
+      'type' => 'boolean_checkbox',
+      'weight' => -11
+    ]);
 
-    $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the entity was created.'));
+    /**
+     *
+     * @see https://www.drupal.org/docs/8/core/modules/datetime-range/how-to-use-datetime-range-in-a-custom-entity
+     */
+    $fields['dates_disabled_range'] = BaseFieldDefinition::create('daterange')->setLabel(t(' Desactivées les dates sur periode '))->setRevisionable(false)->setDisplayOptions('view', array(
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => 0
+    ))->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setDisplayOptions('form', array(
+      'type' => 'dis_hours_date_time_widget',
+      'weight' => 0
+    ))->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)->setSetting('date_date_element', 'none');
 
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the entity was last edited.'));
+    //
+    $fields['heures_disabled'] = BaseFieldDefinition::create('daterange')->setLabel(t('Heures desactivées'))->setRevisionable(false)->setDisplayConfigurable('form', TRUE)->setDisplayOptions('form', [
+      'type' => 'dis_hours_date_time_widget',
+      'weight' => 0,
+      'settings' => [
+        'date_type' => 'none',
+        'time_type' => 'time'
+      ]
+    ])->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
 
-    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Revision translation affected'))
-      ->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))
-      ->setReadOnly(TRUE)
-      ->setRevisionable(TRUE)
-      ->setTranslatable(TRUE);
+    //
+    $fields['jours_disabled'] = BaseFieldDefinition::create('list_string')->setLabel(t(' Jours de la semaine '))->setDescription(" Appliquer la desactivation de l'heure sur les jours de la semaine ")->setSetting('allowed_values_function', [
+      '\Drupal\prise_rendez_vous\PriseRendezVous',
+      'getJoursOptions'
+    ])->setDisplayOptions('view', [
+      'label' => 'above'
+    ])->setDisplayOptions('form', [
+      'type' => 'options_buttons',
+      'settings' => [],
+      'weight' => -3
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+
+    /**
+     *
+     * @see https://www.drupal.org/docs/8/core/modules/datetime-range/how-to-use-datetime-range-in-a-custom-entity
+     */
+    $fields['dates_disabled'] = BaseFieldDefinition::create('datetime')->setLabel(t(' Desactivées les dates '))->setRevisionable(false)->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)->setSetting('datetime_type', DateTimeItem::DATETIME_TYPE_DATE);
+
+    // $fields['heures_disabled2'] =
+    // BaseFieldDefinition::create('dis_hours_field_type')->setLabel(t('Heures
+    // desactivées 2'))->setRevisionable(false)->setDisplayConfigurable('form',
+    // TRUE)->setDisplayConfigurable('view',
+    // TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+
+    $fields['created'] = BaseFieldDefinition::create('created')->setLabel(t('Created'))->setDescription(t('The time that the entity was created.'));
+    $fields['changed'] = BaseFieldDefinition::create('changed')->setLabel(t('Changed'))->setDescription(t('The time that the entity was last edited.'));
+    $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE)->setTranslatable(TRUE);
 
     return $fields;
   }

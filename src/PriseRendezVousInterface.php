@@ -70,4 +70,25 @@ interface PriseRendezVousInterface {
     ]
   ];
 
+  /**
+   *
+   * @var array
+   */
+  const field_default_value = [
+    'heure_debut' => '07:00',
+    'heure_fin' => '13:30',
+    'jours' => [
+      0,
+      6
+    ],
+    'dates' => [
+      '2022-02-02',
+      '2022-02-03'
+    ],
+    'dates_periodes' => [
+      'debut' => '2022-03-10',
+      'fin' => '2022-03-25'
+    ]
+  ];
+
 }

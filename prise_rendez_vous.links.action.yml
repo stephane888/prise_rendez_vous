@@ -13,3 +13,8 @@ entity.submit_rdv_entity.add_form:
   title: 'Add Submit rdv entity'
   appears_on:
     - entity.submit_rdv_entity.collection
+entity.equipes_entity.add_form:
+  route_name: entity.equipes_entity.add_form
+  title: 'Add Equipes entity'
+  appears_on:
+    - entity.equipes_entity.collection

@@ -1,10 +1,10 @@
-prise_rendez_vous.example:
-  path: '/prise-rendez-vous/example'
+prise_rendez_vous.manager:
+  path: '/prise-rendez-vous/manager/{entity_type_id}/{id}'
   defaults:
-    _title: 'Example'
-    _controller: '\Drupal\prise_rendez_vous\Controller\PriseRendezVousController::build'
+    _title: 'Gestion de la prise de rendez-vous'
+    _form: '\Drupal\prise_rendez_vous\Form\PriseRendezVousBasic'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer prise_rendez_vous configuration'
 
 prise_rendez_vous.settings_form:
   path: '/admin/config/system/prise-rendez-vous'
@@ -13,3 +13,4 @@ prise_rendez_vous.settings_form:
     _form: 'Drupal\prise_rendez_vous\Form\SettingsForm'
   requirements:
     _permission: 'administer prise_rendez_vous configuration'
+
