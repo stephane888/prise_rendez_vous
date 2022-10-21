@@ -2,9 +2,11 @@ prise_rendez_vous.manager:
   path: '/prise-rendez-vous/manager/{entity_type_id}/{id}'
   defaults:
     _title: 'Gestion de la prise de rendez-vous'
-    _form: '\Drupal\prise_rendez_vous\Form\PriseRendezVousBasic'
+    _form: '\Drupal\prise_rendez_vous\Form\PriseRendezVousBasicForm'
   requirements:
     _permission: 'administer prise_rendez_vous configuration'
+  options:
+    _admin_route: TRUE
 
 prise_rendez_vous.settings_form:
   path: '/admin/config/system/prise-rendez-vous'
@@ -12,5 +14,5 @@ prise_rendez_vous.settings_form:
     _title: 'prise rendez vous settings'
     _form: 'Drupal\prise_rendez_vous\Form\SettingsForm'
   requirements:
-    _permission: 'administer prise_rendez_vous configuration'
+    _permission: 'Administer prise_rendez_vous configuration'
 

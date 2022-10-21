@@ -177,7 +177,21 @@ class EquipesEntity extends ContentEntityBase implements EquipesEntityInterface 
       'weight' => -4
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
 
-    $fields['users'] = BaseFieldDefinition::create('entity_reference')->setLabel(t("Membre de l'equipe "))->setDescription(t(' The users ID for equipes '))->setSetting('target_type', 'user')->setSetting('handler', 'default')->setDisplayOptions('form', [
+    /**
+     * --
+     */
+    $fields['users'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(" Membre de l'equipe "))->setDescription(t(' The users ID for equipes '))->setSetting('target_type', 'user')->setSetting('handler', 'default')->setDisplayOptions('form', [
+      'type' => 'select2_entity_reference',
+      'weight' => 40,
+      'settings' => [
+        'autocomplete' => true
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+
+    /**
+     * --
+     */
+    $fields['rdv_config_entity'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(" Type de rdv config "))->setSetting('target_type', 'rdv_config_entity')->setSetting('handler', 'default')->setDisplayOptions('form', [
       'type' => 'select2_entity_reference',
       'weight' => 40,
       'settings' => [

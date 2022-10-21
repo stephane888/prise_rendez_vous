@@ -7,6 +7,8 @@
  */
 namespace Drupal\prise_rendez_vous;
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Defines an interface for ice cream flavor plugins.
  */

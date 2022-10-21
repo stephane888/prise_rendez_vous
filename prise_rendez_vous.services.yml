@@ -1,4 +1,13 @@
 services:
   prise_rendez_vous.manage.basic:
     class: Drupal\prise_rendez_vous\Services\PriseRendezVousSimple
-    arguments: []
+    arguments: ['@prise_rendez_vous.manage.equipes', '@prise_rendez_vous.manage.disperiod']
+  
+  prise_rendez_vous.manage.equipes:
+    class: Drupal\prise_rendez_vous\Services\Ressources\EquipesService
+    arguments: [] 
+  
+  prise_rendez_vous.manage.disperiod:
+    class: Drupal\prise_rendez_vous\Services\Ressources\DisPeriodService
+    arguments: []  
+    

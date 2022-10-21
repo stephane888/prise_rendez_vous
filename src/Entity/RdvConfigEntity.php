@@ -17,6 +17,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "form" = {
  *       "add" = "Drupal\prise_rendez_vous\Form\RdvConfigEntityForm",
  *       "edit" = "Drupal\prise_rendez_vous\Form\RdvConfigEntityForm",
+ *       "default" = "Drupal\prise_rendez_vous\Form\RdvConfigEntityForm",
  *       "delete" = "Drupal\prise_rendez_vous\Form\RdvConfigEntityDeleteForm"
  *     },
  *     "route_provider" = {

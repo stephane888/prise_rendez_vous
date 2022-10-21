@@ -286,6 +286,17 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
       'weight' => -4
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)->setSetting('datetime_type', DateTimeItem::DATETIME_TYPE_DATE);
 
+    /**
+     * --
+     */
+    $fields['rdv_config_entity'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(" Type de rdv config "))->setSetting('target_type', 'rdv_config_entity')->setSetting('handler', 'default')->setDisplayOptions('form', [
+      'type' => 'select2_entity_reference',
+      'weight' => 40,
+      'settings' => [
+        'autocomplete' => true
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+
     // $fields['heures_disabled2'] =
     // BaseFieldDefinition::create('dis_hours_field_type')->setLabel(t('Heures
     // desactivées 2'))->setRevisionable(false)->setDisplayConfigurable('form',
