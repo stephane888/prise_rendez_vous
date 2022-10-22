@@ -11,7 +11,7 @@ use Drupal\prise_rendez_vous\Entity\RdvConfigEntity;
  *
  */
 class EquipesService extends ControllerBase {
-
+  use RessourcesTrait;
   /**
    *
    * @var string
@@ -35,9 +35,22 @@ class EquipesService extends ControllerBase {
       $values = [
         'rdv_config_entity' => $entity->id()
       ];
-      // dd($values);
-      return $this->entityTypeManager()->getStorage(self::entityEquipes)->create($values);
+      $Entity = $this->entityTypeManager()->getStorage(self::entityEquipes)->create($values);
+      $this->addDomain($Entity);
+      return $Entity;
     }
+  }
+
+  /**
+   * --
+   *
+   * @param RdvConfigEntity $entity
+   */
+  public function clone(RdvConfigEntity $entity, $domainId = null) {
+    $equipe = $this->getEntityEquipes($entity);
+    $cloneEquipe = $equipe->createDuplicate();
+    $this->addDomain($cloneEquipe, $domainId);
+    $cloneEquipe->save();
   }
 
 }

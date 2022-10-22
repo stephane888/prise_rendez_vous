@@ -8,6 +8,8 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\prise_rendez_vous\Services\Ressources\EquipesService;
 use Drupal\prise_rendez_vous\Entity\RdvConfigEntity;
 use Drupal\prise_rendez_vous\Services\Ressources\DisPeriodService;
+use Drupal\prise_rendez_vous\Services\Ressources\PriseRdv;
+use Drupal\prise_rendez_vous\Services\Ressources\SaveRdvEntityService;
 
 /**
  * Permet de gerer les simples RDV.
@@ -30,9 +32,23 @@ class PriseRendezVousSimple extends ControllerBase {
    */
   protected $EquipesService;
 
-  function __construct(EquipesService $EquipesService, DisPeriodService $DisPeriodService) {
+  /**
+   *
+   * @var PriseRdv
+   */
+  protected $PriseRdv;
+
+  /**
+   *
+   * @var SaveRdvEntityService
+   */
+  public $SaveRdvEntityService;
+
+  function __construct(EquipesService $EquipesService, DisPeriodService $DisPeriodService, PriseRdv $PriseRdv, SaveRdvEntityService $SaveRdvEntityService) {
     $this->EquipesService = $EquipesService;
     $this->DisPeriodService = $DisPeriodService;
+    $this->PriseRdv = $PriseRdv;
+    $this->SaveRdvEntityService = $SaveRdvEntityService;
   }
 
   /**
@@ -48,16 +64,15 @@ class PriseRendezVousSimple extends ControllerBase {
   public function saveConfigForm(array $values) {
     $typeRdv = $this->entityTypeManager()->getStorage(self::entityRdvConfig);
     // On verifie si l'entité existe deja.
-    if (!empty($values['id'])) {
-      $rdvConfig = $typeRdv->load($values['id']);
-      if ($rdvConfig) {
-        foreach ($values as $k => $value) {
-          $rdvConfig->set($k, $value);
-        }
+    $rdvConfig = $typeRdv->load($values['id']);
+    if ($rdvConfig) {
+      foreach ($values as $k => $value) {
+        $rdvConfig->set($k, $value);
       }
     }
     else
       $rdvConfig = $typeRdv->create($values);
+
     //
     $rdvConfig->save();
     return $rdvConfig;
@@ -74,12 +89,11 @@ class PriseRendezVousSimple extends ControllerBase {
     $entityRdv = $typeRdv->load($key);
     if ($entityRdv)
       return $entityRdv;
-    else {
-      return $typeRdv->create([
-        'id' => $key,
-        'label' => $key
-      ]);
-    }
+    //
+    return $typeRdv->create([
+      'id' => $key,
+      'label' => $this->getLabelRdv($entity)
+    ]);
   }
 
   /**
@@ -88,8 +102,42 @@ class PriseRendezVousSimple extends ControllerBase {
     return $this->EquipesService->getEntityEquipes($entity);
   }
 
+  /**
+   *
+   * @param RdvConfigEntity $entity
+   * @return mixed|\Drupal\Core\Entity\EntityInterface
+   */
   public function getEntityDisPeriod(RdvConfigEntity $entity) {
     return $this->DisPeriodService->getEntityDisPeriod($entity);
+  }
+
+  /**
+   */
+  public function getCreneaux(ContentEntityBase $entity) {
+    $rdvConfig = $this->getConfigEntity($entity);
+    if ($rdvConfig) {
+      return $this->PriseRdv->getDatasRdv($rdvConfig);
+    }
+    throw new \Exception("Le contenu n'est pas definit");
+  }
+
+  /**
+   * Permet de dupliquer la configuration d'un entité et de mettre sur un autre.
+   */
+  public function CloneFromAnotherEntity(ContentEntityBase $cloneNode, ContentEntityBase $node, ContentEntityBase $entityData) {
+    // Duplication de la configuration.
+    $cloneConfigRdv = $this->getConfigEntity($node)->createDuplicate();
+    $cloneConfigRdv->set('id', $this->getKeyId($cloneNode));
+    $cloneConfigRdv->set('label', $this->getLabelRdv($cloneNode));
+    $cloneConfigRdv->save();
+    //
+    $domainId = null;
+    if (\Drupal::moduleHandler()->moduleExists('domain')) {
+      $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
+      $domainId = $entityData->get($field_access)->target_id;
+    }
+    $this->EquipesService->clone($this->getConfigEntity($node), $domainId);
+    $this->DisPeriodService->clone($this->getConfigEntity($node), $domainId);
   }
 
   /**
@@ -99,6 +147,15 @@ class PriseRendezVousSimple extends ControllerBase {
    */
   protected function getKeyId(ContentEntityBase $entity) {
     return preg_replace('/[^a-z0-9\-]/', "_", $entity->getEntityTypeId() . '.' . $entity->bundle() . '.' . $entity->id());
+  }
+
+  /**
+   *
+   * @param ContentEntityBase $entity
+   * @return string
+   */
+  protected function getLabelRdv(ContentEntityBase $entity) {
+    return $entity->bundle() . ' : ' . $entity->label();
   }
 
 }

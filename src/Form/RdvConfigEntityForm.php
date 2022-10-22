@@ -74,24 +74,31 @@ class RdvConfigEntityForm extends EntityForm {
         '#default_value' => $val['h_f'] . ':' . $val['m_f']
       ];
     }
-
+    //
     $form['interval'] = [
       '#type' => 'number',
       '#title' => "Durée d'un creneau en minutes",
       '#default_value' => $rdv_config_entity->get('interval')
     ];
-
+    //
     $form['decalage'] = [
       '#type' => 'number',
       '#title' => "Decallage entre deux creneau",
       '#default_value' => $rdv_config_entity->get('decalage')
     ];
-
+    //
     $form['limit_reservation'] = [
       '#type' => 'number',
       '#title' => "Nombre de reservation par creneaux ",
       '#default_value' => $rdv_config_entity->get('limit_reservation')
     ];
+    //
+    $form['number_week'] = [
+      '#type' => 'number',
+      '#title' => "Nombre de semaine ",
+      '#default_value' => $rdv_config_entity->get('number_week')
+    ];
+    //
     return $form;
   }
 

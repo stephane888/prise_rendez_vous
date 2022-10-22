@@ -1,13 +1,26 @@
 services:
   prise_rendez_vous.manage.basic:
     class: Drupal\prise_rendez_vous\Services\PriseRendezVousSimple
-    arguments: ['@prise_rendez_vous.manage.equipes', '@prise_rendez_vous.manage.disperiod']
+    arguments: ['@prise_rendez_vous.manage.equipes', '@prise_rendez_vous.manage.disperiod', '@prise_rendez_vous.manage.PriseRdv', '@prise_rendez_vous.manage.saveRdv']
   
   prise_rendez_vous.manage.equipes:
     class: Drupal\prise_rendez_vous\Services\Ressources\EquipesService
-    arguments: [] 
+    arguments: []
   
   prise_rendez_vous.manage.disperiod:
     class: Drupal\prise_rendez_vous\Services\Ressources\DisPeriodService
-    arguments: []  
+    arguments: []
     
+  prise_rendez_vous.manage.PriseRdv:
+    class: Drupal\prise_rendez_vous\Services\Ressources\PriseRdv
+    arguments: []
+    
+  prise_rendez_vous.manage.saveRdv:
+    class: Drupal\prise_rendez_vous\Services\Ressources\SaveRdvEntityService
+    arguments: []
+    
+  prise_rendez_vous.event_subscriber:
+    class: Drupal\prise_rendez_vous\EventSubscriber\PriseRendezVousSubscriber
+    arguments: ['@messenger','@entity_type.manager','@prise_rendez_vous.manage.basic']
+    tags:
+      - { name: event_subscriber }

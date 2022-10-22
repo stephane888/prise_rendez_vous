@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\prise_rendez_vous\Entity\RdvConfigEntity;
 
 class DisPeriodService extends ControllerBase {
+  use RessourcesTrait;
   protected const entityDisPeriod = 'dis_period_entity';
 
   /**
@@ -24,8 +25,22 @@ class DisPeriodService extends ControllerBase {
         'rdv_config_entity' => $entity->id()
       ];
       // dd($values);
-      return $this->entityTypeManager()->getStorage(self::entityDisPeriod)->create($values);
+      $Entity = $this->entityTypeManager()->getStorage(self::entityDisPeriod)->create($values);
+      $this->addDomain($Entity);
+      return $Entity;
     }
+  }
+
+  /**
+   * --
+   *
+   * @param RdvConfigEntity $entity
+   */
+  public function clone(RdvConfigEntity $entity, $domainId = null) {
+    $equipe = $this->getEntityDisPeriod($entity);
+    $cloneEquipe = $equipe->createDuplicate();
+    $this->addDomain($cloneEquipe, $domainId);
+    $cloneEquipe->save();
   }
 
 }

@@ -7,6 +7,9 @@
  */
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeTypeInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
@@ -88,10 +91,50 @@ function _prise_rendez_vous_submitRedirectRdvForm(&$form, FormStateInterface $fo
   $nodeForm = $form_state->getFormObject();
   // on empeche drupal de faire une redirection via destination.
   \Drupal::request()->query->remove('destination');
-  $form_state->setRedirect("prise_rendez_vous.manager", [
+  $form_state->setRedirect("prise_rendez_vous.manager.get", [
     'entity_type_id' => 'node',
     'id' => $nodeForm->getEntity()->id()
   ]);
 }
 
+/**
+ * implement hook_entity_base_field_info
+ *
+ * @param EntityTypeInterface $entity_type
+ */
+function prise_rendez_vous_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+  $entities = [
+    'dis_period_entity',
+    'equipes_entity',
+    'submit_rdv_entity'
+  ];
+  if (in_array($entity_type->id(), $entities)) {
+    if (\Drupal::moduleHandler()->moduleExists('domain')) {
+      __prise_rendez_vous_fields_domain($fields);
+    }
+  }
+  return $fields;
+}
 
+/**
+ *
+ * @param array $fields
+ */
+function __prise_rendez_vous_fields_domain(array &$fields) {
+  $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
+  $field_source = \Drupal\domain_source\DomainSourceElementManagerInterface::DOMAIN_SOURCE_FIELD;
+  //
+  $fields[$field_access] = BaseFieldDefinition::create('entity_reference')->setLabel(t("Domain access"))->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)->setTranslatable(false)->setDisplayOptions('form', [
+    'type' => 'select2_entity_reference',
+    'weight' => 40,
+    'settings' => [
+      'autocomplete' => true
+    ]
+  ])->setSetting('handler', 'default')->setSetting('target_type', 'domain')->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setDefaultValueCallback('\Drupal\creation_site_virtuel\CreationSiteVirtuel::getActiveDomain');
+  //
+  $fields[$field_source] = BaseFieldDefinition::create('entity_reference')->setLabel(t("Domain source"))->setDisplayOptions('form', [
+    'type' => 'options_select',
+    'weight' => 40
+  ])->setSetting('handler', 'default')->setSetting('target_type', 'domain')->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setTranslatable(false);
+}

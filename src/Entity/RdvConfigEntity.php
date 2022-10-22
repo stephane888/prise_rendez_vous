@@ -99,7 +99,7 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
    *
    * @var integer
    */
-  protected $number_week = 6;
+  protected $number_week = 3;
 
   /**
    * Limitation du nombre de reservation par equipe ou par personne.
@@ -108,6 +108,11 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
    */
   protected $limit_reservation = 1;
 
+  /**
+   *
+   * {@inheritdoc}
+   * @see \Drupal\Core\Config\Entity\ConfigEntityBase::preSave()
+   */
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
     $jours = $this->get('jours');
