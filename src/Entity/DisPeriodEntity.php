@@ -295,7 +295,7 @@ class DisPeriodEntity extends EditorialContentEntityBase implements DisPeriodEnt
       'settings' => [
         'autocomplete' => true
       ]
-    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
 
     // $fields['heures_disabled2'] =
     // BaseFieldDefinition::create('dis_hours_field_type')->setLabel(t('Heures

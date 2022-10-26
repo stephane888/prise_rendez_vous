@@ -113,7 +113,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
   /**
    * On selectionne les participants.
    */
-  protected function FormStep2(&$form, $entity_type_id, $id, FormStateInterface $form_state) {
+  protected function FormStep2Old(&$form, $entity_type_id, $id, FormStateInterface $form_state) {
     $form['equipes_entity'] = [
       '#type' => 'fieldset',
       '#title' => 'Configuration des equipes/personel',
@@ -128,6 +128,17 @@ class PriseRendezVousBasicGetForm extends FormBase {
     $form_state->set('equipes_entity__form_display', $form_display);
     $form_display->buildForm($EntityEquipe, $form['equipes_entity'], $form_state);
     //
+    $this->actionButtons($form, $form_state, 'Suivant', "SaveEquipesSubmit");
+  }
+
+  protected function FormStep2(&$form, $entity_type_id, $id, FormStateInterface $form_state) {
+    $form['equipes_entity'] = [
+      '#type' => 'fieldset',
+      '#title' => 'Configuration des equipes/personel',
+      '#tree' => TRUE
+    ];
+    $entity = $this->PriseRendezVousSimple->getConfigEntity($this->getEntity());
+    $form['equipes_entity']['table'] = $this->PriseRendezVousSimple->EquipesService->ListBuilder($entity);
     $this->actionButtons($form, $form_state, 'Suivant', "SaveEquipesSubmit");
   }
 
@@ -275,9 +286,9 @@ class PriseRendezVousBasicGetForm extends FormBase {
      *
      * @var EntityFormDisplay $form_display
      */
-    // $form_display = $form_state->get('disperiod_entity__form_display');
-    // $form_display->extractFormValues($entity, $form, $form_state);
-    // $entity->save();
+    $form_display = $form_state->get('disperiod_entity__form_display');
+    $form_display->extractFormValues($entity, $form, $form_state);
+    $entity->save();
 
     $this->NextSubmit($form, $form_state);
   }

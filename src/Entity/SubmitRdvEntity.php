@@ -243,6 +243,28 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     $fields['creneau_string'] = BaseFieldDefinition::create('string')->setLabel(t('Creneau ( brute )'))->setDescription(t(' Creneaux en affichage brute. '));
     $fields['created'] = BaseFieldDefinition::create('created')->setLabel(t('Created'))->setDescription(t('The time that the entity was created.'));
 
+    /**
+     * --
+     */
+    $fields['rdv_config_entity'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(" Type de rdv config "))->setSetting('target_type', 'rdv_config_entity')->setSetting('handler', 'default')->setDisplayOptions('form', [
+      'type' => 'select2_entity_reference',
+      'weight' => 40,
+      'settings' => [
+        'autocomplete' => true
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
+
+    /**
+     * --
+     */
+    $fields['equipes_entity'] = BaseFieldDefinition::create('entity_reference')->setLabel(t(" Equipe selectionée "))->setSetting('target_type', 'equipes_entity')->setSetting('handler', 'default')->setDisplayOptions('form', [
+      'type' => 'select2_entity_reference',
+      'weight' => 40,
+      'settings' => [
+        'autocomplete' => true
+      ]
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
+
     $fields['changed'] = BaseFieldDefinition::create('changed')->setLabel(t('Changed'))->setDescription(t('The time that the entity was last edited.'));
 
     $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE)->setTranslatable(TRUE);

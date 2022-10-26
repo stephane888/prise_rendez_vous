@@ -21,6 +21,7 @@ class EquipesEntityForm extends ContentEntityForm {
   protected $account;
 
   /**
+   *
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -31,6 +32,7 @@ class EquipesEntityForm extends ContentEntityForm {
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
@@ -41,6 +43,7 @@ class EquipesEntityForm extends ContentEntityForm {
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
@@ -51,16 +54,18 @@ class EquipesEntityForm extends ContentEntityForm {
     switch ($status) {
       case SAVED_NEW:
         $this->messenger()->addMessage($this->t('Created the %label Equipes entity.', [
-          '%label' => $entity->label(),
+          '%label' => $entity->label()
         ]));
         break;
 
       default:
         $this->messenger()->addMessage($this->t('Saved the %label Equipes entity.', [
-          '%label' => $entity->label(),
+          '%label' => $entity->label()
         ]));
     }
-    $form_state->setRedirect('entity.equipes_entity.canonical', ['equipes_entity' => $entity->id()]);
+    $form_state->setRedirect('entity.equipes_entity.canonical', [
+      'equipes_entity' => $entity->id()
+    ]);
   }
 
 }

@@ -14,6 +14,7 @@ use Drupal\Core\Link;
 class EquipesEntityListBuilder extends EntityListBuilder {
 
   /**
+   *
    * {@inheritdoc}
    */
   public function buildHeader() {
@@ -23,16 +24,16 @@ class EquipesEntityListBuilder extends EntityListBuilder {
   }
 
   /**
+   *
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
+
     /* @var \Drupal\prise_rendez_vous\Entity\EquipesEntity $entity */
     $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
-      'entity.equipes_entity.edit_form',
-      ['equipes_entity' => $entity->id()]
-    );
+    $row['name'] = Link::createFromRoute($entity->label(), 'entity.equipes_entity.edit_form', [
+      'equipes_entity' => $entity->id()
+    ]);
     return $row + parent::buildRow($entity);
   }
 

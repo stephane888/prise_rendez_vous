@@ -67,6 +67,11 @@ class EquipesEntity extends ContentEntityBase implements EquipesEntityInterface 
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
+    $querys = \Drupal::request()->query->all();
+    if (!empty($querys)) {
+      if ($querys['rdv_config_entity'])
+        $values['rdv_config_entity'] = $querys['rdv_config_entity'];
+    }
     $values += [
       'user_id' => \Drupal::currentUser()->id()
     ];
@@ -197,7 +202,7 @@ class EquipesEntity extends ContentEntityBase implements EquipesEntityInterface 
       'settings' => [
         'autocomplete' => true
       ]
-    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED);
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
 
     $fields['status']->setDescription(t('A boolean indicating whether the Equipes entity is published.'))->setDisplayOptions('form', [
       'type' => 'boolean_checkbox',

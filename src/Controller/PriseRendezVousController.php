@@ -96,17 +96,19 @@ class PriseRendezVousController extends ControllerBase {
       $datas = $request->getContent();
       $datas = Json::decode($datas);
       $content = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
-      if ($content && $datas) {
+      if ($content && !empty($datas['creneau'])) {
         $BaseConfig = $this->PriseRendezVousSimple->getConfigEntity($content)->toArray();
-        $day = new \DateTime($datas['date']);
-        $time = explode(":", $datas['creneaux']);
+        $day = new \DateTime($datas['creneau']['date']);
+        $time = explode(":", $datas['creneau']['value']);
         $values = [
           'name' => $content->label(),
           'creneau' => [
             'value' => $day->setTime($time[0], $time[1])->format("Y-m-d\TH-i-s"),
             'end_value' => $day->modify("+ " . $BaseConfig["interval"] . " minutes")->format("Y-m-d\TH-i-s")
           ],
-          'creneau_string' => $datas['creneaux']
+          'creneau_string' => $datas['creneau']['value'],
+          'rdv_config_entity' => $BaseConfig['id'],
+          'equipes_entity' => isset($datas['equipe']) ? $datas['equipe'] : null
         ];
         $RdvEntity = $this->PriseRendezVousSimple->SaveRdvEntityService->saveRdv($values);
         // $this->PriseRendezVousSimple->SaveRdvEntityService->saveRdv($values);

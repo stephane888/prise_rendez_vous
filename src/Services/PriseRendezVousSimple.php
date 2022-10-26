@@ -30,7 +30,7 @@ class PriseRendezVousSimple extends ControllerBase {
    *
    * @var EquipesService
    */
-  protected $EquipesService;
+  public $EquipesService;
 
   /**
    *
