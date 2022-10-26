@@ -139,7 +139,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
     ];
     $entity = $this->PriseRendezVousSimple->getConfigEntity($this->getEntity());
     $form['equipes_entity']['table'] = $this->PriseRendezVousSimple->EquipesService->ListBuilder($entity);
-    $this->actionButtons($form, $form_state, 'Suivant', "SaveEquipesSubmit");
+    $this->actionButtons($form, $form_state, 'Suivant');
   }
 
   /**
