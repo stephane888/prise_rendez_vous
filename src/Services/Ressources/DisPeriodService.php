@@ -11,6 +11,8 @@ class DisPeriodService extends ControllerBase {
 
   /**
    * On aurra un contenu equipe pour un type de reservation.
+   *
+   * @deprecated
    */
   public function getEntityDisPeriod(RdvConfigEntity $entity) {
     $equipes = $this->entityTypeManager()->getStorage(self::entityDisPeriod)->loadByProperties([
@@ -36,11 +38,19 @@ class DisPeriodService extends ControllerBase {
    *
    * @param RdvConfigEntity $entity
    */
-  public function clone(RdvConfigEntity $entity, $domainId = null) {
-    $equipe = $this->getEntityDisPeriod($entity);
-    $cloneEquipe = $equipe->createDuplicate();
-    $this->addDomain($cloneEquipe, $domainId);
-    $cloneEquipe->save();
+  public function clone(RdvConfigEntity $entity, $domainId = null, $id_rdv_config_entity) {
+    $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
+    $domaineId = \Drupal\creation_site_virtuel\CreationSiteVirtuel::getActiveDomain();
+    $equipes = $this->entityTypeManager()->getStorage(self::entityDisPeriod)->loadByProperties([
+      'rdv_config_entity' => $entity->id(),
+      $field_access => $domaineId
+    ]);
+    foreach ($equipes as $equipe) {
+      $cloneEquipe = $equipe->createDuplicate();
+      $cloneEquipe->set('rdv_config_entity', $id_rdv_config_entity);
+      $this->addDomain($cloneEquipe, $domainId);
+      $cloneEquipe->save();
+    }
   }
 
 }

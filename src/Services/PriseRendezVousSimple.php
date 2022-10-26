@@ -136,8 +136,8 @@ class PriseRendezVousSimple extends ControllerBase {
       $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
       $domainId = $entityData->get($field_access)->target_id;
     }
-    $this->EquipesService->clone($this->getConfigEntity($node), $domainId);
-    $this->DisPeriodService->clone($this->getConfigEntity($node), $domainId);
+    $this->EquipesService->clone($this->getConfigEntity($node), $domainId, $cloneConfigRdv->id());
+    $this->DisPeriodService->clone($this->getConfigEntity($node), $domainId, $cloneConfigRdv->id());
   }
 
   /**
