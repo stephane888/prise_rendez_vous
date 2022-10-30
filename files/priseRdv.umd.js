@@ -75935,8 +75935,8 @@ var HomeViewvue_type_template_id_c80f6c40_render = function render() {
 
 var HomeViewvue_type_template_id_c80f6c40_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=620fdadc&
-var CardAppointmentvue_type_template_id_620fdadc_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=3d5158c8&
+var CardAppointmentvue_type_template_id_3d5158c8_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -75948,7 +75948,7 @@ var CardAppointmentvue_type_template_id_620fdadc_render = function render() {
     staticClass: "d-flex align-items-baseline justify-content-between"
   }, [_c('div', {
     staticClass: "date-hours-title"
-  }, [_vm._v("1. Selectionner l'utilisateur")]), _c('b-form-group', {
+  }, [_vm._v("1. Avec qui ?")]), _c('b-form-group', {
     staticClass: "mx-5",
     attrs: {
       "size": "lg"
@@ -76105,7 +76105,7 @@ var CardAppointmentvue_type_template_id_620fdadc_render = function render() {
   }, [_vm._v("Final")]), _c('recapitulation-options')], 1), _c('div', [_c('pop-up-modal')], 1)]);
 };
 
-var CardAppointmentvue_type_template_id_620fdadc_staticRenderFns = [function () {
+var CardAppointmentvue_type_template_id_3d5158c8_staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -76118,7 +76118,7 @@ var CardAppointmentvue_type_template_id_620fdadc_staticRenderFns = [function () 
   }, [_vm._v("Connected!")])])]);
 }];
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=620fdadc&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=3d5158c8&
 
 ;// CONCATENATED MODULE: ./node_modules/vuex/dist/vuex.esm.js
 
@@ -85380,6 +85380,170 @@ class termsTaxo {
   }
 
 });
+;// CONCATENATED MODULE: ../drupal-vuejs/src/App/BasicAuthentification/user.js
+
+/**
+ * Ce fichier a pour role de gerer laa connexion des utilisateur.
+ * Logique :
+ * 1 : les paramettres de connexion sont verfiées.
+ * 2 : Si ok, on sauvegarde dans local storage.
+ * 3 : on initialise la
+ */
+
+const keyCren = "drupal-vuejs-credential";
+const valCren = "drupal-vuejs-cre-val";
+/* harmony default export */ var BasicAuthentification_user = ({ ...basic,
+
+  /**
+   * ( Semble fonctionner au niveau drupal sans necessite de module ).
+   * values = {
+   *     name: '',
+   *     pass: '',
+   * }
+   * @param {*} values
+   * @returns
+   */
+  login(values) {
+    return new Promise((resolv, reject) => {
+      if (values.name && values.pass) {
+        this.post("/user/login?_format=json", values).then(resp => {
+          this.saveTempCredential(values, resp.data);
+          resolv(resp);
+        }).catch(error => reject(error));
+      } else throw "Format de connexion non valide";
+    });
+  },
+
+  /**
+   * On sauvegarde de maniere temporaire les identifications de connexion.
+   */
+  saveTempCredential(values, resp) {
+    localStorage.setItem(keyCren, JSON.stringify(values));
+    localStorage.setItem(valCren, JSON.stringify(resp));
+  },
+
+  loadCredential() {
+    const cre = localStorage.getItem(keyCren);
+
+    if (cre) {
+      return JSON.parse(cre);
+    } else false;
+  },
+
+  deleteConnexion() {
+    localStorage.removeItem(keyCren);
+  },
+
+  checkCurrentUserIsLogin() {
+    const cre = localStorage.getItem(valCren);
+    const cre1 = localStorage.getItem(keyCren);
+
+    if (cre && cre1) {
+      return JSON.parse(cre);
+    } else false;
+  }
+
+});
+;// CONCATENATED MODULE: ../drupal-vuejs/src/App/drupal-utilities.js
+/* harmony default export */ var drupal_utilities = ({
+  stringLength: 19,
+
+  /**
+   * Permet de convertir les strings en snake_case utilisable par les id de drupal.
+   * @param {*} string
+   * @returns
+   */
+  snakeCase(string) {
+    return string.replace(/\W+/g, " ").split(/ |\B(?=[A-Z])/).map(word => word.toLowerCase()).join("_");
+  },
+
+  /**
+   * Permet de generer un identifiant valide pour le creation de type d'entité
+   */
+  generateIdEntityType(string) {
+    let idString = this.snakeCase(string).substring(0, this.stringLength);
+    const start = new Date();
+    idString += "_";
+    idString += start.getFullYear();
+    idString += "_";
+    idString += start.getMonth();
+    idString += "_";
+    idString += Math.floor(Math.random() * 999);
+    return idString;
+  }
+
+});
+;// CONCATENATED MODULE: ../drupal-vuejs/src/App/BasicAuthentification/RequestBasicAuthen.js
+
+
+
+
+
+var RequestBasicAuthen_formatBasicAuth = function (userName, password) {
+  var basicAuthCredential = userName + ":" + password;
+  var bace64 = btoa(basicAuthCredential);
+  return "Basic " + bace64;
+};
+
+/* harmony default export */ var RequestBasicAuthen = ({ ...BootStrap,
+  ...BasicAuthentification_user,
+  ...drupal_utilities,
+
+  /**
+   * Get datas;
+   */
+  async dGet(url, configCustom = null, showNotification = false) {
+    const userLogin = this.loadCredential();
+    var configs = {
+      "Content-Type": "application/json"
+    };
+
+    if (userLogin) {
+      configs["Authorization"] = RequestBasicAuthen_formatBasicAuth(userLogin.name, userLogin.pass);
+    }
+
+    if (configCustom) {
+      configs = this.mergeHeaders(configCustom, configs);
+    }
+
+    return this.bGet(url, {
+      headers: configs
+    }, showNotification);
+  },
+
+  async dPost(url, datas, configCustom = null, showNotification = true) {
+    const userLogin = this.loadCredential();
+    var configs = {
+      "Content-Type": "application/json"
+    };
+
+    if (userLogin) {
+      configs["Authorization"] = RequestBasicAuthen_formatBasicAuth(userLogin.name, userLogin.pass);
+    }
+
+    if (configCustom) {
+      configs = this.mergeHeaders(configCustom, configs);
+    }
+
+    return this.bPost(url, datas, {
+      headers: configs
+    }, showNotification);
+  },
+
+  /**
+   *
+   */
+  mergeHeaders(configCustom, configs) {
+    if (configCustom) {
+      for (const i in configCustom) {
+        configs[i] = configCustom[i];
+      }
+    }
+
+    return configs;
+  }
+
+});
 ;// CONCATENATED MODULE: ../drupal-vuejs/src/App/formatFields/InputBootstrap.js
 /* harmony default export */ var InputBootstrap = ({
   modelsFields: {},
@@ -85511,7 +85675,8 @@ class formatField {
   }
   /**
    * - Cet object permet de rendre les elements de l'object ecoutable.
-   *   on creer tous les champs, puis on initialise InputBootstrap.modelsFields avec tous les champs. Decette facon vuejs peut ecouter les MAJ de champs.
+   *   on creer tous les champs, puis on initialise InputBootstrap.modelsFields avec tous les champs.
+   *   De cette facon vuejs peut ecouter les MAJ de champs.
    */
 
 
@@ -90583,6 +90748,7 @@ var loginRegister_component = (0,componentNormalizer/* default */.Z)(
 
 /* harmony default export */ var loginRegister = (loginRegister_component.exports);
 ;// CONCATENATED MODULE: ../drupal-vuejs/index.js
+
 
 
 
@@ -102624,10 +102790,10 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 });
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CardAppointmentvue_type_script_lang_js_ = (CardAppointmentvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=620fdadc&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=3d5158c8&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=620fdadc&prod&lang=scss&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=3d5158c8&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue
 
@@ -102640,8 +102806,8 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
 var CardAppointment_component = (0,componentNormalizer/* default */.Z)(
   components_CardAppointmentvue_type_script_lang_js_,
-  CardAppointmentvue_type_template_id_620fdadc_render,
-  CardAppointmentvue_type_template_id_620fdadc_staticRenderFns,
+  CardAppointmentvue_type_template_id_3d5158c8_render,
+  CardAppointmentvue_type_template_id_3d5158c8_staticRenderFns,
   false,
   null,
   null,

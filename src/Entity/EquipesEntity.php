@@ -170,7 +170,7 @@ class EquipesEntity extends ContentEntityBase implements EquipesEntityInterface 
       ]
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')->setLabel(t('Name'))->setDescription(t('The name of the Equipes entity entity.'))->setSettings([
+    $fields['name'] = BaseFieldDefinition::create('string')->setLabel(t("Nom de l'equipe / personel"))->setDescription(t('The name of the Equipes entity entity.'))->setSettings([
       'max_length' => 50,
       'text_processing' => 0
     ])->setDefaultValue('')->setDisplayOptions('view', [
