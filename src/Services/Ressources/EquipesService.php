@@ -12,7 +12,7 @@ use Drupal\Core\Render\Renderer;
 /**
  *
  * @author stephane
- *
+ *        
  */
 class EquipesService extends ControllerBase {
   use RessourcesTrait;
@@ -21,7 +21,7 @@ class EquipesService extends ControllerBase {
    * @var string
    */
   protected const entityEquipes = 'equipes_entity';
-
+  
   /**
    * Permet de lister les equipes + le bouton permettant d'ajouter une nouvelle
    * equipe.
@@ -75,13 +75,13 @@ class EquipesService extends ControllerBase {
       $build
     ];
   }
-
+  
   /**
    * Gets this list's default operations.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *        The entity the operations are for.
-   *
+   *        
    * @return array The array structure is identical to the return value of
    *         self::getOperations().
    */
@@ -101,10 +101,10 @@ class EquipesService extends ControllerBase {
         'url' => $this->ensureDestination($entity->toUrl('delete-form'))
       ];
     }
-
+    
     return $operations;
   }
-
+  
   public function buildOperations(EntityInterface $entity) {
     $build = [
       '#type' => 'operations',
@@ -118,7 +118,7 @@ class EquipesService extends ControllerBase {
     $build = $renderer->renderRoot($build);
     return $build;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -126,16 +126,16 @@ class EquipesService extends ControllerBase {
   public function getOperations(EntityInterface $entity) {
     $operations = $this->getDefaultOperations($entity);
     uasort($operations, '\Drupal\Component\Utility\SortArray::sortByWeightElement');
-
+    
     return $operations;
   }
-
+  
   /**
    * Ensures that a destination is present on the given URL.
    *
    * @param \Drupal\Core\Url $url
    *        The URL object to which the destination should be added.
-   *
+   *        
    * @return \Drupal\Core\Url The updated URL object.
    */
   protected function ensureDestination(Url $url) {
@@ -143,13 +143,13 @@ class EquipesService extends ControllerBase {
       'query' => $this->getRedirectDestination()->getAsArray()
     ]);
   }
-
+  
   /**
    * --
    *
    * @param RdvConfigEntity $entity
    */
-  public function clone(RdvConfigEntity $entity, $domainId = null, $id_rdv_config_entity) {
+  public function clone(RdvConfigEntity $entity, $domainId, $id_rdv_config_entity) {
     $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
     $domaineId = \Drupal\creation_site_virtuel\CreationSiteVirtuel::getActiveDomain();
     $equipes = $this->entityTypeManager()->getStorage(self::entityEquipes)->loadByProperties([
@@ -163,5 +163,5 @@ class EquipesService extends ControllerBase {
       $cloneEquipe->save();
     }
   }
-
+  
 }

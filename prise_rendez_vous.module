@@ -20,7 +20,7 @@ function prise_rendez_vous_form_node_type_form_alter(&$form, FormStateInterface 
     '#title' => t(' Prise de rendez vous '),
     '#group' => 'additional_settings'
   );
-
+  
   // Load the current node type configuration entity.
   $node_type = $form_state->getFormObject()->getEntity();
   //
@@ -42,7 +42,7 @@ function prise_rendez_vous_form_node_type_form_alter(&$form, FormStateInterface 
       ]
     ]
   ];
-
+  
   $form['#entity_builders'][] = 'prise_rendez_vous_form_node_type_form_builder';
 }
 
@@ -64,7 +64,7 @@ function prise_rendez_vous_form_node_form_alter(&$form, FormStateInterface $form
    * @var \Drupal\node\NodeForm $entity
    */
   $FormObject = $form_state->getFormObject();
-
+  
   /**
    *
    * @var \Drupal\node\Entity\Node $entity

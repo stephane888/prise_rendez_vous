@@ -11,13 +11,13 @@ use Drupal\Core\Render\Renderer;
 class DisPeriodService extends ControllerBase {
   use RessourcesTrait;
   protected const entityDisPeriod = 'dis_period_entity';
-
+  
   /**
    *
    * @var string
    */
   protected const entityEquipes = 'equipes_entity';
-
+  
   /**
    * Permet de lister les equipes + le bouton permettant d'ajouter une nouvelle
    * equipe.
@@ -71,7 +71,7 @@ class DisPeriodService extends ControllerBase {
       $build
     ];
   }
-
+  
   /**
    * On aurra un contenu equipe pour un type de reservation.
    *
@@ -95,13 +95,13 @@ class DisPeriodService extends ControllerBase {
       return $Entity;
     }
   }
-
+  
   /**
    * --
    *
    * @param RdvConfigEntity $entity
    */
-  public function clone(RdvConfigEntity $entity, $domainId = null, $id_rdv_config_entity) {
+  public function clone(RdvConfigEntity $entity, $domainId, $id_rdv_config_entity) {
     $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
     $domaineId = \Drupal\creation_site_virtuel\CreationSiteVirtuel::getActiveDomain();
     $equipes = $this->entityTypeManager()->getStorage(self::entityDisPeriod)->loadByProperties([
@@ -115,5 +115,5 @@ class DisPeriodService extends ControllerBase {
       $cloneEquipe->save();
     }
   }
-
+  
 }
