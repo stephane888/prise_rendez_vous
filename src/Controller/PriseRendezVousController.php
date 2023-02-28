@@ -4,7 +4,7 @@ namespace Drupal\prise_rendez_vous\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
-use Stephane888\Debug\Utility;
+use Stephane888\Debug\ExceptionExtractMessage;
 use Drupal\Component\Serialization\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\prise_rendez_vous\Services\PriseRendezVousSimple;
@@ -19,11 +19,11 @@ class PriseRendezVousController extends ControllerBase {
    * @var PriseRendezVousSimple
    */
   protected $PriseRendezVousSimple;
-
+  
   function __construct(PriseRendezVousSimple $PriseRendezVousSimple) {
     $this->PriseRendezVousSimple = $PriseRendezVousSimple;
   }
-
+  
   /**
    * Builds the response.
    */
@@ -32,10 +32,10 @@ class PriseRendezVousController extends ControllerBase {
       '#type' => 'item',
       '#markup' => $this->t('It works!')
     ];
-
+    
     return $build;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -43,7 +43,7 @@ class PriseRendezVousController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static($container->get('prise_rendez_vous.manage.basic'));
   }
-
+  
   /**
    *
    * @param Request $request
@@ -62,7 +62,7 @@ class PriseRendezVousController extends ControllerBase {
     }
     throw new \Exception("Le contenu n'est pas definit");
   }
-
+  
   protected function getDataToRdv(string $entity_type_id, $entity_id) {
     $datas = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
     if ($datas) {
@@ -70,7 +70,7 @@ class PriseRendezVousController extends ControllerBase {
     }
     return [];
   }
-
+  
   public function PageRender(Request $request) {
     $build['content'] = [
       '#type' => 'html_tag',
@@ -86,7 +86,7 @@ class PriseRendezVousController extends ControllerBase {
     $build['content']['#attached']['library'][] = 'prise_rendez_vous/prise_rdv';
     return $build;
   }
-
+  
   /**
    *
    * @return string[]|\Drupal\Core\StringTranslation\TranslatableMarkup[]
@@ -120,10 +120,10 @@ class PriseRendezVousController extends ControllerBase {
       throw new \Exception("Le contenu n'est pas definit ...");
     }
     catch (\Exception $e) {
-      return $this->reponse(Utility::errorAll($e), 400, $e->getMessage());
+      return $this->reponse(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
     }
   }
-
+  
   /**
    *
    * @param Array|string $configs
@@ -140,5 +140,5 @@ class PriseRendezVousController extends ControllerBase {
     $reponse->setContent($configs);
     return $reponse;
   }
-
+  
 }
