@@ -49,4 +49,23 @@ prise_rendez_vous.settings_form:
     _form: 'Drupal\prise_rendez_vous\Form\SettingsForm'
   requirements:
     _permission: 'Administer prise_rendez_vous configuration'
+    
+prise_rendez_vous.default_settings_form:
+  path: '/prise-rendez-vous/default-settings'
+  defaults:
+    _title: 'prise rendez vous settings'
+    _form: 'Drupal\prise_rendez_vous\Form\PriseRendezVousSettingsForm'
+  requirements:
+    _permission: 'admin_default_configuration'
+    
+    
+prise_rendez_vous.load_default_configs:
+  path: '/prise-rendez-vous/load-default-configs'
+  defaults:
+    _title: 'prise rendez vous settings'
+    _controller: '\Drupal\prise_rendez_vous\Controller\PriseRendezVousController::LoadDefaultConfigsCreneauRdv'
+  requirements:
+    _permission: 'access content'   
+    
+
 

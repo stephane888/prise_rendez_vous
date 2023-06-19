@@ -10,13 +10,14 @@ use Drupal\prise_rendez_vous\Entity\EquipesEntity;
 /**
  *
  * @author stephane
- *
+ *        
  */
 class PriseRdv extends ControllerBase {
   protected $maxCreneau = 50;
-
+  
   /**
-   * permet de fabriquer le tableau des creneaux
+   * permet de fabriquer le tableau des creneaux à partir de la configuration de
+   * l'entité "rdv_config_entity".
    *
    * @param ContentEntityBase $entity
    * @throws \Exception
@@ -37,7 +38,7 @@ class PriseRdv extends ControllerBase {
     $result['equipes_options'] = $this->getEquipesIds($result['equipes']);
     $result['unvalable'] = $this->getUnvalableCreneaux($dateToday, $lastDay, $confs, $result['equipes']);
     $result['jours'] = [];
-
+    
     for ($i = 0; $i < $nberDays; $i++) {
       $dayConf = $confs['jours'][$runDateDay->format('w')];
       $result['jours'][] = [
@@ -52,7 +53,7 @@ class PriseRdv extends ControllerBase {
     $result['entityType'] = $confs;
     return $result;
   }
-
+  
   /**
    * --
    */
@@ -73,7 +74,7 @@ class PriseRdv extends ControllerBase {
     }
     return $equipes;
   }
-
+  
   protected function getEquipesIds(array $equipes) {
     $ar = [];
     foreach ($equipes as $equipe) {
@@ -81,7 +82,7 @@ class PriseRdv extends ControllerBase {
     }
     return $ar;
   }
-
+  
   /**
    * Recupere les creneaux non valide.
    */
@@ -105,10 +106,10 @@ class PriseRdv extends ControllerBase {
         }
       }
     }
-
+    
     return $Unvalables;
   }
-
+  
   /**
    *
    * @param \DateTime $day
@@ -122,7 +123,7 @@ class PriseRdv extends ControllerBase {
     $day_string = $day->format("Y-m-d H:i:s");
     $day_string_small = $day->format("Y-m-d");
     $UnvalablesCreneaux = [];
-
+    
     foreach ($Unvalables as $k_day_string => $value) {
       // Pour cette journée certains creneaux sont desctivées.
       if ($day_string_small == $k_day_string) {
@@ -130,13 +131,13 @@ class PriseRdv extends ControllerBase {
         break;
       }
     }
-
+    
     $d = new \DateTime($day_string);
     $f = new \DateTime($day_string);
     $d->setTime($dayConf['h_d'], $dayConf['m_d']);
     $f->setTime($dayConf['h_f'], $dayConf['m_f']);
     $interval = !empty($entityArray['interval']) ? $entityArray['interval'] : 30;
-
+    
     if ($f > $d) {
       $i = 0;
       while ($f > $d && $i < $this->maxCreneau) {
@@ -164,5 +165,5 @@ class PriseRdv extends ControllerBase {
     }
     return $creneaux;
   }
-
+  
 }

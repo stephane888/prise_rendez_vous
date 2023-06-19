@@ -83,4 +83,9 @@ view published equipes entity entities:
 
 view unpublished equipes entity entities:
   title: 'View unpublished Equipes entity entities'
+  
+# custom
+admin_default_configuration:
+  title: 'Edit la configuration par default'
+  
 

@@ -9,6 +9,8 @@ use Drupal\Component\Serialization\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\prise_rendez_vous\Services\PriseRendezVousSimple;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Stephane888\DrupalUtility\HttpResponse;
+use Stephane888\Debug\Repositories\ConfigDrupal;
 
 /**
  * Returns responses for prise rendez vous routes.
@@ -55,12 +57,26 @@ class PriseRendezVousController extends ControllerBase {
     $entity = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
     if (!empty($entity)) {
       $creneaux = $this->PriseRendezVousSimple->getCreneaux($entity);
-      return $this->reponse([
+      return HttpResponse::response([
         'data_creneaux' => $creneaux,
         'data_to_rdv' => $this->getDataToRdv($entity_type_id, $entity_id)
       ]);
     }
     throw new \Exception("Le contenu n'est pas definit");
+  }
+  
+  /**
+   * Charge la configuration par defautl.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   */
+  public function LoadDefaultConfigsCreneauRdv() {
+    $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
+    $content['entityType'] = [];
+    return HttpResponse::response([
+      'data_creneaux' => $content,
+      'data_to_rdv' => []
+    ]);
   }
   
   protected function getDataToRdv(string $entity_type_id, $entity_id) {
