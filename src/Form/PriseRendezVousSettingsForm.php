@@ -57,7 +57,7 @@ class PriseRendezVousSettingsForm extends ConfigFormBase {
             $configs['label'] = $label = $domain->getHostname();
           }
           else
-            $id = $domain->id();
+            $configs['id'] = $id = $domain->id();
       }
     }
     // from prise_rendez_vous/src/Form/RdvConfigEntityForm.php
