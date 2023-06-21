@@ -15,7 +15,7 @@ use Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\CheckoutPaneInterface;
  *
  * @CommerceCheckoutPane(
  *   id = "prise_rendez_vous",
- *   label = @Translation("PriseRendezVous"),
+ *   label = @Translation("Prise Rendez Vous"),
  *   default_step = "priserendezvous_checkf",
  *   wrapper_element = "fieldset",
  * )
@@ -30,7 +30,7 @@ class PriseRendezVous extends CheckoutPaneBase implements CheckoutPaneInterface 
     $pane_form['html_reservation'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#value' => 'Formulaire de reservation'
+      '#value' => 'Veuillez selectionner une date pour votre rendez vous'
     ];
     $pane_form['content_form'] = [
       '#type' => 'html_tag',
