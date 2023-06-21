@@ -8,28 +8,36 @@ use Drupal\prise_rendez_vous\Entity\SubmitRdvEntity;
 /**
  *
  * @author stephane
- *
+ *        
  */
 class SaveRdvEntityService extends ControllerBase {
-  /**
-   *
-   * @var string
-   */
-  protected const entitySubmitRdv = 'equipes_entity';
-
+  
   /**
    *
    * @param array $values
    * @return \Drupal\prise_rendez_vous\Entity\SubmitRdvEntity
    */
   function saveRdv(array $values) {
-    $EntitySubmitRdv = SubmitRdvEntity::create($values);
-    // add addtionnal info.
-    $this->addDomain($EntitySubmitRdv);
+    $ignoreKeys = [
+      'id'
+    ];
+    if (!empty($values['id'])) {
+      $EntitySubmitRdv = SubmitRdvEntity::load($values['id']);
+      foreach ($values as $key => $value) {
+        if (!in_array($key, $ignoreKeys)) {
+          $EntitySubmitRdv->set($key, $value);
+        }
+      }
+    }
+    else {
+      $EntitySubmitRdv = SubmitRdvEntity::create($values);
+      // add addtionnal info.
+      $this->addDomain($EntitySubmitRdv);
+    }
     $EntitySubmitRdv->save();
     return $EntitySubmitRdv;
   }
-
+  
   /**
    * --
    */
@@ -42,5 +50,5 @@ class SaveRdvEntityService extends ControllerBase {
       $Entity->set($field_source, $domainId);
     }
   }
-
+  
 }

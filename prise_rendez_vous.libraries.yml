@@ -1,6 +1,7 @@
 prise_rdv:
   js:
     files/priseRdv.umd.min.js: {weight: -5}
+    js/script.js: {weight: -5}
   css:
     component:
       files/priseRdv.css: {weight: 10}

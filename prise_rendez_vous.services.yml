@@ -1,6 +1,6 @@
 services:
   prise_rendez_vous.manage.basic:
-    class: Drupal\prise_rendez_vous\Services\PriseRendezVousSimple
+    class: Drupal\prise_rendez_vous\Services\PriseRendezEntiy
     arguments: ['@prise_rendez_vous.manage.equipes', '@prise_rendez_vous.manage.disperiod', '@prise_rendez_vous.manage.PriseRdv', '@prise_rendez_vous.manage.saveRdv']
   
   prise_rendez_vous.manage.equipes:

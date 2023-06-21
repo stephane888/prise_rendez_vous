@@ -44,11 +44,23 @@ class PriseRendezVousCheckoutflow extends MultistepDefault {
     $form = parent::buildForm($form, $form_state, $step_id);
     // pour l'etape de reservation.
     if ($step_id == 'reservation') {
+      $form['actions']['#attributes']['class'][] = 'd-flex';
+      $form['actions']['#attributes']['class'][] = 'justify-content-center';
       $form['actions']['#access'] = true;
       $form['actions']['next'] = [
         '#type' => 'submit',
         '#value' => $this->t('Next step'),
         '#button_type' => 'primary',
+        // '#disabled' => true,
+        '#attributes' => [
+          'class' => [
+            'btn',
+            'w-auto',
+            'btn-primary',
+            'd-none',
+            $this->pluginId
+          ]
+        ],
         '#submit' => [
           '::submitForm'
         ]

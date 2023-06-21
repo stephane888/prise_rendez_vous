@@ -74,10 +74,16 @@ use Drupal\user\UserInterface;
  * )
  */
 class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEntityInterface {
-
+  
   use EntityChangedTrait;
   use EntityPublishedTrait;
-
+  
+  /**
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $enityTypeManagerCustom;
+  
   /**
    *
    * {@inheritdoc}
@@ -88,47 +94,71 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
       'user_id' => \Drupal::currentUser()->id()
     ];
   }
-
+  
   /**
    *
    * {@inheritdoc}
    */
   protected function urlRouteParameters($rel) {
     $uri_route_parameters = parent::urlRouteParameters($rel);
-
+    
     if ($rel === 'revision_revert' && $this instanceof RevisionableInterface) {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
     }
     elseif ($rel === 'revision_delete' && $this instanceof RevisionableInterface) {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
     }
-
+    
     return $uri_route_parameters;
   }
-
+  
   /**
    *
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
-
+    
+    // On doit verifier que les champs de reference sont bien definit
+    if (!$this->checkIfEntityReferenceIsvalid())
+      throw new \Exception("L'entite de reference n'est pas definie");
     foreach (array_keys($this->getTranslationLanguages()) as $langcode) {
       $translation = $this->getTranslation($langcode);
-
+      
       // If no owner has been set explicitly, make the anonymous user the owner.
       if (!$translation->getOwner()) {
         $translation->setOwnerId(0);
       }
     }
-
+    
     // If no revision author has been set explicitly,
     // make the submit_rdv_entity owner the revision author.
     if (!$this->getRevisionUser()) {
       $this->setRevisionUserId($this->getOwnerId());
     }
   }
-
+  
+  public function checkIfEntityReferenceIsvalid() {
+    $entity_type = $this->getEntityTypeManager()->getStorage($this->get('entity_type')->value);
+    if ($entity_type) {
+      $entity = $entity_type->load($this->get('entity_id')->value);
+      if ($entity)
+        return true;
+    }
+    return false;
+  }
+  
+  /**
+   *
+   * @return \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected function getEntityTypeManager() {
+    if (!$this->enityTypeManagerCustom) {
+      $this->enityTypeManagerCustom = \Drupal::entityTypeManager();
+    }
+    return $this->enityTypeManagerCustom;
+  }
+  
   /**
    *
    * {@inheritdoc}
@@ -136,7 +166,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
   public function getName() {
     return $this->get('name')->value;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -145,7 +175,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     $this->set('name', $name);
     return $this;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -153,7 +183,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -162,7 +192,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     $this->set('created', $timestamp);
     return $this;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -170,7 +200,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
   public function getOwner() {
     return $this->get('user_id')->entity;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -178,7 +208,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
   public function getOwnerId() {
     return $this->get('user_id')->target_id;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -187,7 +217,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     $this->set('user_id', $uid);
     return $this;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -196,17 +226,17 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     $this->set('user_id', $account->id());
     return $this;
   }
-
+  
   /**
    *
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
-
+    
     // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);
-
+    
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Authored by'))->setDescription(t('The user ID of author of the Submit rdv entity entity.'))->setRevisionable(TRUE)->setSetting('target_type', 'user')->setSetting('handler', 'default')->setTranslatable(TRUE)->setDisplayOptions('view', [
       'label' => 'hidden',
       'type' => 'author',
@@ -221,9 +251,9 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
         'placeholder' => ''
       ]
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
-
+    
     $fields['name'] = BaseFieldDefinition::create('string')->setLabel(t('Name'))->setDescription(t('The name of the Submit rdv entity entity.'))->setRevisionable(TRUE)->setSettings([
-      'max_length' => 50,
+      'max_length' => 250,
       'text_processing' => 0
     ])->setDefaultValue('')->setDisplayOptions('view', [
       'label' => 'above',
@@ -233,16 +263,16 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
       'type' => 'string_textfield',
       'weight' => -4
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
-
+    
     $fields['status']->setDescription(t('A boolean indicating whether the Submit rdv entity is published.'))->setDisplayOptions('form', [
       'type' => 'boolean_checkbox',
       'weight' => -3
     ]);
-
+    
     $fields['creneau'] = BaseFieldDefinition::create('daterange')->setLabel(t('Creneau'))->setRevisionable(TRUE)->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
     $fields['creneau_string'] = BaseFieldDefinition::create('string')->setLabel(t('Creneau ( brute )'))->setDescription(t(' Creneaux en affichage brute. '));
     $fields['created'] = BaseFieldDefinition::create('created')->setLabel(t('Created'))->setDescription(t('The time that the entity was created.'));
-
+    
     /**
      * --
      */
@@ -253,7 +283,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
         'autocomplete' => true
       ]
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
-
+    
     /**
      * --
      */
@@ -264,12 +294,55 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
         'autocomplete' => true
       ]
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
-
+    
+    /**
+     * L'id parent.
+     */
+    $fields['entity_id'] = BaseFieldDefinition::create('integer')->setLabel(t('Entity id'))->setRevisionable(TRUE)->setSettings([
+      'max_length' => 50
+    ])->setDefaultValue('')->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4
+    ])->setDisplayOptions('form', [
+      'type' => 'number_integer',
+      'weight' => -4
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
+    
+    /**
+     * Reprensente bundle qui peut etre vide.
+     */
+    $fields['entity_type_id'] = BaseFieldDefinition::create('string')->setLabel(t('Entity type id'))->setRevisionable(TRUE)->setSettings([
+      'max_length' => 100,
+      'text_processing' => 0
+    ])->setDefaultValue('')->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4
+    ])->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
+    /**
+     * Reprensente l'entite ou la reservation s'accroche.
+     */
+    $fields['entity_type'] = BaseFieldDefinition::create('string')->setLabel(t('entity_type'))->setRevisionable(TRUE)->setSettings([
+      'max_length' => 100,
+      'text_processing' => 0
+    ])->setDefaultValue('')->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4
+    ])->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4
+    ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setRequired(TRUE);
+    
     $fields['changed'] = BaseFieldDefinition::create('changed')->setLabel(t('Changed'))->setDescription(t('The time that the entity was last edited.'));
-
+    
     $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')->setLabel(t('Revision translation affected'))->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))->setReadOnly(TRUE)->setRevisionable(TRUE)->setTranslatable(TRUE);
-
+    
     return $fields;
   }
-
+  
 }

@@ -9,10 +9,10 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Drupal\vuejs_entity\Event\DuplicateEntityEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\prise_rendez_vous\Services\PriseRendezVousSimple;
+use Drupal\prise_rendez_vous\Services\PriseRendezEntiy;
 
 class PriseRendezVousSubscriber implements EventSubscriberInterface {
-
+  
   /**
    * The messenger.
    *
@@ -20,45 +20,45 @@ class PriseRendezVousSubscriber implements EventSubscriberInterface {
    */
   protected $messenger;
   protected $EntityTypeManager;
-  protected $PriseRendezVousSimple;
-
+  protected $PriseRendezEntiy;
+  
   /**
    * Constructs event subscriber.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *        The messenger.
    */
-  public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $EntityTypeManager, PriseRendezVousSimple $PriseRendezVousSimple) {
+  public function __construct(MessengerInterface $messenger, EntityTypeManagerInterface $EntityTypeManager, PriseRendezEntiy $PriseRendezEntiy) {
     $this->messenger = $messenger;
     $this->EntityTypeManager = $EntityTypeManager;
-    $this->PriseRendezVousSimple = $PriseRendezVousSimple;
+    $this->PriseRendezEntiy = $PriseRendezEntiy;
   }
-
+  
   /**
    * Permet de savoir qu'un contenu a été cloné.
    *
    * @param DuplicateEntityEvent $DuplicateEntityEvent
    */
   public function DuplicateEntity(DuplicateEntityEvent $DuplicateEntityEvent) {
-
+    
     /**
      *
      * @var \Drupal\node\Entity\Node $entityClone
      */
     $entityClone = $DuplicateEntityEvent->entityClone;
-
+    
     /**
      *
      * @var \Drupal\node\Entity\Node $entityClone
      */
     $entity = $DuplicateEntityEvent->entity;
-
+    
     /**
      *
      * @var \Drupal\Core\Entity\EntityInterface $entityData
      */
     $entityData = $DuplicateEntityEvent->entityDatas;
-
+    
     if ($entityClone->getEntityType() instanceof \Drupal\Core\Entity\ContentEntityType) {
       if ($entityClone->getEntityType()->hasKey('bundle')) {
         $entityTypeId = $entityClone->getEntityType()->getBundleEntityType();
@@ -67,7 +67,7 @@ class PriseRendezVousSubscriber implements EventSubscriberInterface {
         //
         if (!empty($ThirdPartySettings['prise_rendez_vous_enabled'])) {
           try {
-            $this->PriseRendezVousSimple->CloneFromAnotherEntity($entityClone, $entity, $entityData);
+            $this->PriseRendezEntiy->CloneFromAnotherEntity($entityClone, $entity, $entityData);
           }
           catch (\Exception $e) {
             \Drupal::logger('prise_rendez_vous')->alert($e->getMessage());
@@ -76,7 +76,7 @@ class PriseRendezVousSubscriber implements EventSubscriberInterface {
       }
     }
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -88,5 +88,5 @@ class PriseRendezVousSubscriber implements EventSubscriberInterface {
       ]
     ];
   }
-
+  
 }

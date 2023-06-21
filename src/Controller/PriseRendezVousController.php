@@ -7,7 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Stephane888\Debug\ExceptionExtractMessage;
 use Drupal\Component\Serialization\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Drupal\prise_rendez_vous\Services\PriseRendezVousSimple;
+use Drupal\prise_rendez_vous\Services\PriseRendezEntiy;
+use Drupal\prise_rendez_vous\Services\Ressources\PriseRdv;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Stephane888\DrupalUtility\HttpResponse;
 use Stephane888\Debug\Repositories\ConfigDrupal;
@@ -18,12 +19,19 @@ use Stephane888\Debug\Repositories\ConfigDrupal;
 class PriseRendezVousController extends ControllerBase {
   /**
    *
-   * @var PriseRendezVousSimple
+   * @var PriseRendezEntiy
    */
-  protected $PriseRendezVousSimple;
+  protected $PriseRendezEntiy;
   
-  function __construct(PriseRendezVousSimple $PriseRendezVousSimple) {
-    $this->PriseRendezVousSimple = $PriseRendezVousSimple;
+  /**
+   *
+   * @var PriseRdv
+   */
+  protected $PriseRdv;
+  
+  function __construct(PriseRendezEntiy $PriseRendezEntiy, PriseRdv $PriseRdv) {
+    $this->PriseRendezEntiy = $PriseRendezEntiy;
+    $this->PriseRdv = $PriseRdv;
   }
   
   /**
@@ -43,7 +51,7 @@ class PriseRendezVousController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('prise_rendez_vous.manage.basic'));
+    return new static($container->get('prise_rendez_vous.manage.basic'), $container->get('prise_rendez_vous.manage.PriseRdv'));
   }
   
   /**
@@ -56,10 +64,12 @@ class PriseRendezVousController extends ControllerBase {
   public function LoadCreneauRdv(Request $request, string $entity_type_id, $entity_id) {
     $entity = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
     if (!empty($entity)) {
-      $creneaux = $this->PriseRendezVousSimple->getCreneaux($entity);
+      $creneaux = $this->PriseRendezEntiy->getCreneaux($entity);
+      $BaseConfig = $this->PriseRendezEntiy->getConfigEntity($entity);
       return HttpResponse::response([
         'data_creneaux' => $creneaux,
-        'data_to_rdv' => $this->getDataToRdv($entity_type_id, $entity_id)
+        'data_to_rdv' => $this->getDataToRdv($entity_type_id, $entity_id),
+        'rdv_config_entity' => $BaseConfig->id()
       ]);
     }
     throw new \Exception("Le contenu n'est pas definit");
@@ -70,13 +80,34 @@ class PriseRendezVousController extends ControllerBase {
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    */
-  public function LoadDefaultConfigsCreneauRdv() {
-    $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
-    $content['entityType'] = [];
-    return HttpResponse::response([
-      'data_creneaux' => $content,
-      'data_to_rdv' => []
-    ]);
+  public function LoadDefaultConfigsCreneauRdv(string $entity_type_id, $entity_id) {
+    try {
+      $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
+      if (!empty($content['id']) && $entity = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id'])) {
+        $creneaux = $this->PriseRdv->getDatasRdv($entity);
+        $results = [
+          'data_creneaux' => $creneaux,
+          'data_to_rdv' => [],
+          'rdv_config_entity' => $content['id'],
+          'action_after_save' => $content['url_redirect']
+        ];
+        // Check si c'est une maj.
+        $submitEntities = $this->entityTypeManager()->getStorage('submit_rdv_entity')->loadByProperties([
+          'entity_id' => $entity_id,
+          'entity_type' => $entity_type_id
+        ]);
+        if ($submitEntities) {
+          $submitEntity = reset($submitEntities);
+          $results['submit_rdv_entity_id'] = $submitEntity->id();
+        }
+        return HttpResponse::response($results);
+      }
+      else
+        throw new \Exception("L'entité RdvConfigEntity n'est pas configurer");
+    }
+    catch (\Exception $e) {
+      return $this->reponse(ExceptionExtractMessage::errorAll($e), 435, $e->getMessage());
+    }
   }
   
   protected function getDataToRdv(string $entity_type_id, $entity_id) {
@@ -109,11 +140,10 @@ class PriseRendezVousController extends ControllerBase {
    */
   public function SaveSouscriptionRdv(Request $request, string $entity_type_id, $entity_id) {
     try {
-      $datas = $request->getContent();
-      $datas = Json::decode($datas);
+      $datas = Json::decode($request->getContent());
       $content = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
       if ($content && !empty($datas['creneau'])) {
-        $BaseConfig = $this->PriseRendezVousSimple->getConfigEntity($content)->toArray();
+        $BaseConfig = $this->PriseRendezEntiy->getConfigEntity($content)->toArray();
         $day = new \DateTime($datas['creneau']['date']);
         $time = explode(":", $datas['creneau']['value']);
         $values = [
@@ -123,11 +153,16 @@ class PriseRendezVousController extends ControllerBase {
             'end_value' => $day->modify("+ " . $BaseConfig["interval"] . " minutes")->format("Y-m-d\TH-i-s")
           ],
           'creneau_string' => $datas['creneau']['value'],
-          'rdv_config_entity' => $BaseConfig['id'],
-          'equipes_entity' => isset($datas['equipe']) ? $datas['equipe'] : null
+          'rdv_config_entity' => $datas['rdv_config_entity'],
+          'equipes_entity' => isset($datas['equipe']) ? $datas['equipe'] : null,
+          'entity_id' => $datas['entity_id'],
+          'entity_type_id' => $datas['entity_type_id'],
+          'entity_type' => $datas['entity_type']
         ];
-        $RdvEntity = $this->PriseRendezVousSimple->SaveRdvEntityService->saveRdv($values);
-        // $this->PriseRendezVousSimple->SaveRdvEntityService->saveRdv($values);
+        if (!empty($datas['submit_rdv_entity_id']))
+          $values['id'] = $datas['submit_rdv_entity_id'];
+        $RdvEntity = $this->PriseRendezEntiy->SaveRdvEntityService->saveRdv($values);
+        // $this->PriseRendezEntiy->SaveRdvEntityService->saveRdv($values);
         return $this->reponse([
           'rdvEntyity' => $RdvEntity->toArray(),
           'values' => $values
@@ -136,7 +171,7 @@ class PriseRendezVousController extends ControllerBase {
       throw new \Exception("Le contenu n'est pas definit ...");
     }
     catch (\Exception $e) {
-      return $this->reponse(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
+      return $this->reponse(ExceptionExtractMessage::errorAll($e), 435, $e->getMessage());
     }
   }
   

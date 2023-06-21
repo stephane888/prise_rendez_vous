@@ -1,6 +1,4 @@
 langcode: 'en'
 label: 'Prise de rendez'
 id: 'default_configs'
-interval: 60
-decalage: 0
-limit_reservation: 1
+url_redirect: ''

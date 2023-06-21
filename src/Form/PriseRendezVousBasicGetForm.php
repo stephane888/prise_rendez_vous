@@ -5,7 +5,7 @@ namespace Drupal\prise_rendez_vous\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
-use Drupal\prise_rendez_vous\Services\PriseRendezVousSimple;
+use Drupal\prise_rendez_vous\Services\PriseRendezEntiy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\NestedArray;
 use Stephane888\Debug\Repositories\FormUtilityDrupal;
@@ -17,7 +17,7 @@ use Drupal\prise_rendez_vous\Entity\EquipesEntity;
  * Ce systeme utilise la methode GET.
  *
  * @author stephane
- *
+ *        
  */
 class PriseRendezVousBasicGetForm extends FormBase {
   /**
@@ -27,17 +27,17 @@ class PriseRendezVousBasicGetForm extends FormBase {
   protected $maxStep = 4;
   protected $entity_type_id;
   protected $id;
-
+  
   /**
    *
-   * @var PriseRendezVousSimple
+   * @var PriseRendezEntiy
    */
-  protected $PriseRendezVousSimple;
-
-  function __construct(PriseRendezVousSimple $PriseRendezVousSimple) {
-    $this->PriseRendezVousSimple = $PriseRendezVousSimple;
+  protected $PriseRendezEntiy;
+  
+  function __construct(PriseRendezEntiy $PriseRendezEntiy) {
+    $this->PriseRendezEntiy = $PriseRendezEntiy;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -45,7 +45,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static($container->get('prise_rendez_vous.manage.basic'));
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -54,7 +54,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
   public function getFormId() {
     return 'prise_rendez_vous_basic_form';
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -69,11 +69,11 @@ class PriseRendezVousBasicGetForm extends FormBase {
         case 1:
           $this->FormStep1($form, $entity_type_id, $id, $form_state);
           break;
-
+        
         case 2:
           $this->FormStep2($form, $entity_type_id, $id, $form_state);
           break;
-
+        
         case 3:
           $this->FormStep3($form, $entity_type_id, $id, $form_state);
           break;
@@ -88,7 +88,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
     }
     return $form;
   }
-
+  
   /**
    * Configuration des RDV.
    */
@@ -100,7 +100,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
         '#title' => 'Configuration de base',
         '#tree' => TRUE
       ];
-      $formParents = $this->PriseRendezVousSimple->getConfigForm($entity);
+      $formParents = $this->PriseRendezEntiy->getConfigForm($entity);
       $a1 = [
         'config_rdv'
       ];
@@ -109,7 +109,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
       $this->actionButtons($form, $form_state, 'Suivant', "SaveConfigNextSubmit");
     }
   }
-
+  
   /**
    * On selectionne les participants.
    */
@@ -120,8 +120,8 @@ class PriseRendezVousBasicGetForm extends FormBase {
       '#tree' => TRUE
     ];
     $entity = $this->getEntity();
-    $entity = $this->PriseRendezVousSimple->getConfigEntity($entity);
-    $EntityEquipe = $this->PriseRendezVousSimple->getEntityEquipes($entity);
+    $entity = $this->PriseRendezEntiy->getConfigEntity($entity);
+    $EntityEquipe = $this->PriseRendezEntiy->getEntityEquipes($entity);
     // dd($EntityEquipe->get('rdv_config_entity'));
     $form_display = EntityFormDisplay::collectRenderDisplay($EntityEquipe, 'default');
     $form_state->set('equipes_entity', $EntityEquipe);
@@ -130,18 +130,18 @@ class PriseRendezVousBasicGetForm extends FormBase {
     //
     $this->actionButtons($form, $form_state, 'Suivant', "SaveEquipesSubmit");
   }
-
+  
   protected function FormStep2(&$form, $entity_type_id, $id, FormStateInterface $form_state) {
     $form['equipes_entity'] = [
       '#type' => 'fieldset',
       '#title' => 'Configuration des equipes/personel',
       '#tree' => TRUE
     ];
-    $entity = $this->PriseRendezVousSimple->getConfigEntity($this->getEntity());
-    $form['equipes_entity']['table'] = $this->PriseRendezVousSimple->EquipesService->ListBuilder($entity);
+    $entity = $this->PriseRendezEntiy->getConfigEntity($this->getEntity());
+    $form['equipes_entity']['table'] = $this->PriseRendezEntiy->EquipesService->ListBuilder($entity);
     $this->actionButtons($form, $form_state, 'Suivant');
   }
-
+  
   /**
    * On configure les dates et creneaux desactivées.
    */
@@ -152,8 +152,8 @@ class PriseRendezVousBasicGetForm extends FormBase {
       '#tree' => TRUE
     ];
     $entity = $this->getEntity();
-    $entity = $this->PriseRendezVousSimple->getConfigEntity($entity);
-    $EntityDisPeriod = $this->PriseRendezVousSimple->getEntityDisPeriod($entity);
+    $entity = $this->PriseRendezEntiy->getConfigEntity($entity);
+    $EntityDisPeriod = $this->PriseRendezEntiy->getEntityDisPeriod($entity);
     //
     $form_display = EntityFormDisplay::collectRenderDisplay($EntityDisPeriod, 'default');
     $form_state->set('disperiod_entity', $EntityDisPeriod);
@@ -163,7 +163,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
     //
     $this->actionButtons($form, $form_state, 'Suivant', "SaveDisPeriodSubmit");
   }
-
+  
   /**
    * On configure les dates et creneaux desactivées.
    */
@@ -175,7 +175,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
     ];
     $this->actionButtons($form, $form_state);
   }
-
+  
   /**
    *
    * @param array $form
@@ -227,7 +227,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
       }
     }
   }
-
+  
   /**
    *
    * @param array $form
@@ -241,11 +241,11 @@ class PriseRendezVousBasicGetForm extends FormBase {
      */
     if (!empty($values['config_rdv'])) {
       // Create or udate rdv config
-      $this->PriseRendezVousSimple->saveConfigForm($values['config_rdv']);
+      $this->PriseRendezEntiy->saveConfigForm($values['config_rdv']);
     }
     $this->NextSubmit($form, $form_state);
   }
-
+  
   /**
    * --
    *
@@ -269,7 +269,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
     $entity->save();
     $this->NextSubmit($form, $form_state);
   }
-
+  
   /**
    *
    * @param array $form
@@ -289,10 +289,10 @@ class PriseRendezVousBasicGetForm extends FormBase {
     $form_display = $form_state->get('disperiod_entity__form_display');
     $form_display->extractFormValues($entity, $form, $form_state);
     $entity->save();
-
+    
     $this->NextSubmit($form, $form_state);
   }
-
+  
   /**
    *
    * @param array $form
@@ -317,7 +317,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
       ]
     ]);
   }
-
+  
   /**
    *
    * @param array $form
@@ -337,7 +337,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
       ]
     ]);
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -346,7 +346,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // parent::submitForm($form, $form_state);
   }
-
+  
   /**
    *
    * @param
@@ -357,7 +357,7 @@ class PriseRendezVousBasicGetForm extends FormBase {
   protected function getEntity() {
     return \Drupal::entityTypeManager()->getStorage($this->entity_type_id)->load($this->id);
   }
-
+  
   /**
    * Process callback: assigns weights and hides extra fields.
    *
@@ -369,5 +369,5 @@ class PriseRendezVousBasicGetForm extends FormBase {
     // $this->entity = $form_state->getFormObject()->getEntity();
     return $element;
   }
-
+  
 }

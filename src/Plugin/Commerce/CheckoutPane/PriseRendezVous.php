@@ -39,6 +39,10 @@ class PriseRendezVous extends CheckoutPaneBase implements CheckoutPaneInterface 
         'id' => 'app-prise-rdv-v1',
         'url-creneaux' => '/prise-rendez-vous/load-default-configs',
         'dynamic-url' => 'false',
+        'entity-id' => $this->order->id(),
+        'entity-type-id' => $this->order->bundle(),
+        'entity-type' => $this->order->getEntityTypeId(),
+        'show-popup-save' => 'false',
         'class' => [
           'm-5',
           'p-5'
@@ -46,6 +50,7 @@ class PriseRendezVous extends CheckoutPaneBase implements CheckoutPaneInterface 
       ]
     ];
     $pane_form['content_form']['#attached']['library'][] = 'prise_rendez_vous/prise_rdv';
+    // $this->checkoutFlow->submitForm($form, $form_state);
     return $pane_form;
   }
   
