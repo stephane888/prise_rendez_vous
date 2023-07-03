@@ -77293,8 +77293,8 @@ var HomeViewvue_type_template_id_c80f6c40_render = function render() {
 
 var HomeViewvue_type_template_id_c80f6c40_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=6a7c91e6&
-var CardAppointmentvue_type_template_id_6a7c91e6_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=945e1cf6&
+var CardAppointmentvue_type_template_id_945e1cf6_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77440,14 +77440,13 @@ var CardAppointmentvue_type_template_id_6a7c91e6_render = function render() {
   })], 1) : _vm._e()]), _vm.$store.getters.canRegister && !_vm.$store.state.connected ? _c('div', {
     staticClass: "container"
   }, [_c('div', {
-    staticClass: "d-none"
-  }, [_c('FormLogin')], 1), _c('div', {
     staticClass: "date-hours-title"
   }, [_vm._v("3. Identification")]), _c('loginRegister', {
     staticClass: "login-register",
     attrs: {
-      "action_after_login": "emit_even",
-      "model_register_form": "generate_password"
+      "action-after-login": "emit_even",
+      "model-register-form": "generate_password",
+      "action-after-register": "emit_even_register"
     }
   })], 1) : _vm._e(), _vm.$store.state.connected && !_vm.$store.state.alreadyConnected ? _c('div', {
     staticClass: "container"
@@ -77466,7 +77465,7 @@ var CardAppointmentvue_type_template_id_6a7c91e6_render = function render() {
   }, [_vm._v("Final")]), _c('recapitulation-options')], 1), _c('div', [_c('pop-up-modal')], 1)]);
 };
 
-var CardAppointmentvue_type_template_id_6a7c91e6_staticRenderFns = [function () {
+var CardAppointmentvue_type_template_id_945e1cf6_staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77479,7 +77478,7 @@ var CardAppointmentvue_type_template_id_6a7c91e6_staticRenderFns = [function () 
   }, [_vm._v("Connected!")])])]);
 }];
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=6a7c91e6&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=945e1cf6&
 
 ;// CONCATENATED MODULE: ./node_modules/vuex/dist/vuex.esm.js
 
@@ -100818,382 +100817,6 @@ var CardSelectedDate_component = (0,componentNormalizer/* default */.Z)(
 )
 
 /* harmony default export */ var CardSelectedDate = (CardSelectedDate_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormLogin.vue?vue&type=template&id=42554812&
-var FormLoginvue_type_template_id_42554812_render = function render() {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "login-registration"
-  }, [_c('div', {
-    staticClass: "content-info accordion",
-    attrs: {
-      "role": "tablist"
-    }
-  }, [_c('div', {
-    staticClass: "date-hours-title"
-  }, [_vm._v("3. Identification")]), _c('div', {
-    staticClass: "registration regist-card"
-  }, [_c('div', {
-    staticClass: "option-title"
-  }, [_vm._v("Nouveau sur ce service ?")]), _c('b-collapse', {
-    staticClass: "form-div",
-    attrs: {
-      "id": "form-register",
-      "role": "tabpanel",
-      "accordion": "my-accordion"
-    }
-  }, [_c('form-card', {
-    attrs: {
-      "type": "register",
-      "btnText": "Créer mon compte"
-    }
-  })], 1), _c('div', {
-    on: {
-      "click": _vm.toggleActiveBtn
-    }
-  }, [_c('button', {
-    directives: [{
-      name: "b-toggle",
-      rawName: "v-b-toggle.form-register",
-      modifiers: {
-        "form-register": true
-      }
-    }, {
-      name: "show",
-      rawName: "v-show",
-      value: !_vm.registerOpen,
-      expression: "!registerOpen"
-    }],
-    staticClass: "btn-regist",
-    class: {
-      'btn-regist--active': !_vm.loginIsActive
-    },
-    attrs: {
-      "role": "tab"
-    }
-  }, [_vm._v(" Créer mon comptee ")])])], 1), _c('div', {
-    staticClass: "ou-div"
-  }, [_vm._v("ou")]), _c('div', {
-    staticClass: "registration regist-card"
-  }, [_c('div', {
-    staticClass: "option-title"
-  }, [_vm._v("Vous avez déjà utilisé ce service ?")]), _c('b-collapse', {
-    staticClass: "form-div",
-    attrs: {
-      "id": "form-login",
-      "role": "tabpanel",
-      "accordion": "my-accordion"
-    }
-  }, [_c('form-card', {
-    attrs: {
-      "btnText": "Se connecter"
-    }
-  })], 1), _c('div', {
-    on: {
-      "click": _vm.toggleActiveBtn
-    }
-  }, [_c('button', {
-    directives: [{
-      name: "b-toggle",
-      rawName: "v-b-toggle.form-login",
-      modifiers: {
-        "form-login": true
-      }
-    }, {
-      name: "show",
-      rawName: "v-show",
-      value: !_vm.loginOpen,
-      expression: "!loginOpen"
-    }],
-    staticClass: "btn-regist",
-    class: {
-      'btn-regist--active': _vm.loginIsActive
-    },
-    attrs: {
-      "role": "tab",
-      "block": ""
-    }
-  }, [_vm._v(" Se connecter ")])])], 1)]), _vm._v(" a ")])]);
-};
-
-var FormLoginvue_type_template_id_42554812_staticRenderFns = [];
-
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormCard.vue?vue&type=template&id=4383c5af&
-var FormCardvue_type_template_id_4383c5af_render = function render() {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c('div', {
-    staticClass: "form-card"
-  }, [_c('form', {
-    attrs: {
-      "action": ""
-    }
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.type !== 'login',
-      expression: "type !== 'login'"
-    }],
-    staticClass: "form-input input-phone"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "tel",
-      "placeholder": "phone"
-    }
-  })]), _c('div', {
-    staticClass: "form-input"
-  }, [_c('svg', {
-    attrs: {
-      "xmlns": "http://www.w3.org/2000/svg",
-      "width": "24",
-      "height": "24",
-      "viewBox": "0 0 24 24"
-    }
-  }, [_c('path', {
-    attrs: {
-      "fill": "#979797",
-      "fill-rule": "evenodd",
-      "d": "M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"
-    }
-  })]), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "email",
-      "placeholder": "Email"
-    }
-  })]), _c('div', {
-    staticClass: "form-input show-pass"
-  }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.passShow,
-      expression: "passShow"
-    }],
-    staticClass: "svg",
-    on: {
-      "click": _vm.passShowToggle
-    }
-  }, [_c('svg', {
-    staticClass: "css-161rwvf",
-    attrs: {
-      "xmlns": "http://www.w3.org/2000/svg",
-      "width": "22",
-      "height": "19",
-      "viewBox": "0 0 24 24"
-    }
-  }, [_c('path', {
-    attrs: {
-      "fill": "#979797",
-      "fill-rule": "evenodd",
-      "d": "M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9zm0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"
-    }
-  })])]), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !_vm.passShow,
-      expression: "!passShow"
-    }],
-    staticClass: "svg",
-    on: {
-      "click": _vm.passShowToggle
-    }
-  }, [_c('svg', {
-    attrs: {
-      "xmlns": "http://www.w3.org/2000/svg",
-      "width": "24",
-      "height": "24",
-      "viewBox": "0 0 24 24"
-    }
-  }, [_c('path', {
-    attrs: {
-      "fill": "#979797",
-      "fill-rule": "evenodd",
-      "d": "M12 6c3.79 0 7.17 2.13 8.82 5.5-.59 1.22-1.42 2.27-2.41 3.12l1.41 1.41c1.39-1.23 2.49-2.77 3.18-4.53C21.27 7.11 17 4 12 4c-1.27 0-2.49.2-3.64.57l1.65 1.65C10.66 6.09 11.32 6 12 6zm-1.07 1.14L13 9.21c.57.25 1.03.71 1.28 1.28l2.07 2.07c.08-.34.14-.7.14-1.07C16.5 9.01 14.48 7 12 7c-.37 0-.72.05-1.07.14zM2.01 3.87l2.68 2.68C3.06 7.83 1.77 9.53 1 11.5 2.73 15.89 7 19 12 19c1.52 0 2.98-.29 4.32-.82l3.42 3.42 1.41-1.41L3.42 2.45 2.01 3.87zm7.5 7.5l2.61 2.61c-.04.01-.08.02-.12.02-1.38 0-2.5-1.12-2.5-2.5 0-.05.01-.08.01-.13zm-3.4-3.4l1.75 1.75c-.23.55-.36 1.15-.36 1.78 0 2.48 2.02 4.5 4.5 4.5.63 0 1.23-.13 1.77-.36l.98.98c-.88.24-1.8.38-2.75.38-3.79 0-7.17-2.13-8.82-5.5.7-1.43 1.72-2.61 2.93-3.53z"
-    }
-  })])]), _c('input', {
-    staticClass: "form-control password-input",
-    attrs: {
-      "type": _vm.passType,
-      "placeholder": "Mot de passe",
-      "autofocus": ""
-    }
-  })]), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.type !== 'login',
-      expression: "type !== 'login'"
-    }],
-    staticClass: "form-input text-left pt-3"
-  }, [_c('b-form-checkbox', {
-    attrs: {
-      "id": "checkbox-1",
-      "name": "checkbox-1",
-      "value": "accepted",
-      "unchecked-value": "not_accepted"
-    }
-  }, [_vm._v(" J'accepte les "), _c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("CGU")])])], 1), _c('button', {
-    staticClass: "btn-regist btn-regist--active",
-    attrs: {
-      "type": "submit"
-    }
-  }, [_vm._v(" " + _vm._s(_vm.btnText) + " ")])]), _vm.type === 'login' ? _c('div', {
-    staticClass: "text-center mt-4"
-  }, [_c('a', {
-    staticClass: "link-sc"
-  }, [_vm._v("Mot de passe oublié")])]) : _vm._e()]);
-};
-
-var FormCardvue_type_template_id_4383c5af_staticRenderFns = [];
-
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormCard.vue?vue&type=script&lang=js&
-/* harmony default export */ var FormCardvue_type_script_lang_js_ = ({
-  name: "DateHourColumn",
-  props: {
-    type: {
-      type: String,
-      default: "login"
-    },
-    btnText: {
-      type: String,
-      default: "Se connecter"
-    }
-  },
-
-  data() {
-    return {
-      passShow: false,
-      passType: "password"
-    };
-  },
-
-  mounted() {},
-
-  computed: {},
-  methods: {
-    passShowToggle() {
-      this.passShow = !this.passShow;
-
-      if (this.passType === "password") {
-        this.passType = "text";
-      } else {
-        this.passType = "password";
-      }
-
-      document.querySelectorAll("input.password-input").forEach(el => el.focus()); //console.log("ss", ps);
-      //if (ps) ps.;
-    }
-
-  }
-});
-;// CONCATENATED MODULE: ./src/components/FormCard.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_FormCardvue_type_script_lang_js_ = (FormCardvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormCard.vue?vue&type=style&index=0&id=4383c5af&prod&lang=scss&
-// extracted by mini-css-extract-plugin
-
-;// CONCATENATED MODULE: ./src/components/FormCard.vue?vue&type=style&index=0&id=4383c5af&prod&lang=scss&
-
-;// CONCATENATED MODULE: ./src/components/FormCard.vue
-
-
-
-;
-
-
-/* normalize component */
-
-var FormCard_component = (0,componentNormalizer/* default */.Z)(
-  components_FormCardvue_type_script_lang_js_,
-  FormCardvue_type_template_id_4383c5af_render,
-  FormCardvue_type_template_id_4383c5af_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var FormCard = (FormCard_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormLogin.vue?vue&type=script&lang=js&
-
-/* harmony default export */ var FormLoginvue_type_script_lang_js_ = ({
-  components: {
-    FormCard: FormCard
-  },
-  name: "FormLogin",
-  props: {},
-
-  data() {
-    return {
-      loginIsActive: false,
-      registerOpen: false,
-      loginOpen: false
-    };
-  },
-
-  mounted() {
-    this.$root.$on("bv::collapse::state", (collapseId, isJustShown) => {
-      if (collapseId == "form-register") {
-        this.registerOpen = isJustShown;
-      } else {
-        this.loginOpen = isJustShown;
-      }
-    });
-  },
-
-  computed: {
-    btnIsActive() {
-      return "";
-    }
-
-  },
-  methods: {
-    toggleActiveBtn() {
-      this.loginIsActive = !this.loginIsActive;
-    }
-
-  }
-});
-;// CONCATENATED MODULE: ./src/components/FormLogin.vue?vue&type=script&lang=js&
- /* harmony default export */ var components_FormLoginvue_type_script_lang_js_ = (FormLoginvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/FormLogin.vue?vue&type=style&index=0&id=42554812&prod&lang=scss&
-// extracted by mini-css-extract-plugin
-
-;// CONCATENATED MODULE: ./src/components/FormLogin.vue?vue&type=style&index=0&id=42554812&prod&lang=scss&
-
-;// CONCATENATED MODULE: ./src/components/FormLogin.vue
-
-
-
-;
-
-
-/* normalize component */
-
-var FormLogin_component = (0,componentNormalizer/* default */.Z)(
-  components_FormLoginvue_type_script_lang_js_,
-  FormLoginvue_type_template_id_42554812_render,
-  FormLoginvue_type_template_id_42554812_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var FormLogin = (FormLogin_component.exports);
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/ServiceChoose.vue?vue&type=template&id=2846f355&
 var ServiceChoosevue_type_template_id_2846f355_render = function render() {
   var _vm = this,
@@ -101252,8 +100875,8 @@ var ServiceChoose_component = (0,componentNormalizer/* default */.Z)(
 )
 
 /* harmony default export */ var ServiceChoose = (ServiceChoose_component.exports);
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RecapitulationOptions.vue?vue&type=template&id=440657c2&
-var RecapitulationOptionsvue_type_template_id_440657c2_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RecapitulationOptions.vue?vue&type=template&id=4c98d822&
+var RecapitulationOptionsvue_type_template_id_4c98d822_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -101261,9 +100884,10 @@ var RecapitulationOptionsvue_type_template_id_440657c2_render = function render(
     staticClass: "recap-content"
   }, [_c('div', {
     staticClass: "desc-content d-none"
-  }, [_vm._v(" Vous êtes sur le point de réserver la prestation : "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.title) + " ")]), _vm._v(" "), _c('br'), _vm._v(" Pour le "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.selected.creneau.text) + " ")]), _c('br'), _vm._v(" Pendant une durrée de "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.duree) + " ")]), _vm._v(" "), _c('br'), _vm._v(" Qui vous coûteras "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.prix) + " ")]), _vm._v(". ")]), _c('div', [_c('button', {
-    staticClass: "btn-regist d-flex align-items-center",
+  }, [_vm._v(" Vous êtes sur le point de réserver la prestation : "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.title) + " ")]), _vm._v(" "), _c('br'), _vm._v(" Pour le "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.selected.creneau.text) + " ")]), _c('br'), _vm._v(" Pendant une durrée de "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.duree) + " ")]), _vm._v(" "), _c('br'), _vm._v(" Qui vous coûteras "), _c('strong', [_vm._v(_vm._s(_vm.$store.state.rdv_datas.prix) + " ")]), _vm._v(". ")]), _c('div', [_c('b-button', {
+    staticClass: "btn-regist d-flex align-items-center justify-content-center",
     attrs: {
+      "variant": "primary",
       "block": ""
     },
     on: {
@@ -101272,7 +100896,13 @@ var RecapitulationOptionsvue_type_template_id_440657c2_render = function render(
         return _vm.saveDatas.apply(null, arguments);
       }
     }
-  }, [_vm._v(" Confirmer la réservation "), _vm.$store.state.saveLoading ? _c('div', {
+  }, [_c('div', [_vm._v("Confirmer la réservation")]), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.$store.state.saveLoading,
+      expression: "$store.state.saveLoading"
+    }],
     staticClass: "ml-3"
   }, [_c('b-spinner', {
     staticStyle: {
@@ -101284,10 +100914,10 @@ var RecapitulationOptionsvue_type_template_id_440657c2_render = function render(
       "type": "grow",
       "label": "Spinning"
     }
-  })], 1) : _vm._e()])])])]);
+  })], 1)])], 1)])]);
 };
 
-var RecapitulationOptionsvue_type_template_id_440657c2_staticRenderFns = [];
+var RecapitulationOptionsvue_type_template_id_4c98d822_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RecapitulationOptions.vue?vue&type=script&lang=js&
 /* harmony default export */ var RecapitulationOptionsvue_type_script_lang_js_ = ({
@@ -101310,10 +100940,10 @@ var RecapitulationOptionsvue_type_template_id_440657c2_staticRenderFns = [];
 });
 ;// CONCATENATED MODULE: ./src/components/RecapitulationOptions.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_RecapitulationOptionsvue_type_script_lang_js_ = (RecapitulationOptionsvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RecapitulationOptions.vue?vue&type=style&index=0&id=440657c2&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RecapitulationOptions.vue?vue&type=style&index=0&id=4c98d822&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/RecapitulationOptions.vue?vue&type=style&index=0&id=440657c2&prod&lang=scss&
+;// CONCATENATED MODULE: ./src/components/RecapitulationOptions.vue?vue&type=style&index=0&id=4c98d822&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ./src/components/RecapitulationOptions.vue
 
@@ -101326,8 +100956,8 @@ var RecapitulationOptionsvue_type_template_id_440657c2_staticRenderFns = [];
 
 var RecapitulationOptions_component = (0,componentNormalizer/* default */.Z)(
   components_RecapitulationOptionsvue_type_script_lang_js_,
-  RecapitulationOptionsvue_type_template_id_440657c2_render,
-  RecapitulationOptionsvue_type_template_id_440657c2_staticRenderFns,
+  RecapitulationOptionsvue_type_template_id_4c98d822_render,
+  RecapitulationOptionsvue_type_template_id_4c98d822_staticRenderFns,
   false,
   null,
   null,
@@ -101439,12 +101069,10 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
 
 
-
 /* harmony default export */ var CardAppointmentvue_type_script_lang_js_ = ({
   components: {
     DateHourColumn: DateHourColumn,
     CardSelectedDate: CardSelectedDate,
-    FormLogin: FormLogin,
     loginRegister: LoginRegister,
     ServiceChoose: ServiceChoose,
     RecapitulationOptions: RecapitulationOptions,
@@ -101600,10 +101228,10 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 });
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CardAppointmentvue_type_script_lang_js_ = (CardAppointmentvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=6a7c91e6&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=945e1cf6&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=6a7c91e6&prod&lang=scss&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=945e1cf6&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue
 
@@ -101616,8 +101244,8 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
 var CardAppointment_component = (0,componentNormalizer/* default */.Z)(
   components_CardAppointmentvue_type_script_lang_js_,
-  CardAppointmentvue_type_template_id_6a7c91e6_render,
-  CardAppointmentvue_type_template_id_6a7c91e6_staticRenderFns,
+  CardAppointmentvue_type_template_id_945e1cf6_render,
+  CardAppointmentvue_type_template_id_945e1cf6_staticRenderFns,
   false,
   null,
   null,
