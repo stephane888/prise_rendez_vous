@@ -86972,8 +86972,8 @@ var CheckStatusvue_type_template_id_0d56cd7c_render = function render() {
 
 var CheckStatusvue_type_template_id_0d56cd7c_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=template&id=2d6edafd&
-var LoginGooglevue_type_template_id_2d6edafd_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=template&id=1872fe04&
+var LoginGooglevue_type_template_id_1872fe04_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -86987,7 +86987,7 @@ var LoginGooglevue_type_template_id_2d6edafd_render = function render() {
   });
 };
 
-var LoginGooglevue_type_template_id_2d6edafd_staticRenderFns = [];
+var LoginGooglevue_type_template_id_1872fe04_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ../drupal-vuejs/src/App/rx/google.js
 //const gapi = window.gapi;
@@ -88329,7 +88329,10 @@ function loadScript(src) {
       if (this.configs_login_rx_vuejs && this.configs_login_rx_vuejs.client_google_id) {
         this.initGoogle();
         return true;
-      } else return "";
+      } else {
+        console.log("Error de configuration de google, veillez denifir la clée 'client_google_id'");
+        return "";
+      }
     }
 
   },
@@ -88417,10 +88420,10 @@ function loadScript(src) {
 });
 ;// CONCATENATED MODULE: ../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_LoginGooglevue_type_script_lang_js_ = (LoginGooglevue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=style&index=0&id=2d6edafd&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-22.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-22.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-22.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-22.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=style&index=0&id=1872fe04&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=style&index=0&id=2d6edafd&prod&lang=scss&
+;// CONCATENATED MODULE: ../drupal-vuejs/src/App/components/LoginGoogle.vue?vue&type=style&index=0&id=1872fe04&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ../drupal-vuejs/src/App/components/LoginGoogle.vue
 
@@ -88433,8 +88436,8 @@ function loadScript(src) {
 
 var LoginGoogle_component = (0,componentNormalizer/* default */.Z)(
   components_LoginGooglevue_type_script_lang_js_,
-  LoginGooglevue_type_template_id_2d6edafd_render,
-  LoginGooglevue_type_template_id_2d6edafd_staticRenderFns,
+  LoginGooglevue_type_template_id_1872fe04_render,
+  LoginGooglevue_type_template_id_1872fe04_staticRenderFns,
   false,
   null,
   null,
@@ -101342,6 +101345,10 @@ const state = {
     mail: [{
       value: ""
     }]
+  },
+  configs_login_rx_vuejs: {
+    client_google_id: "513247959752-qapd9jb30pdtoh51m0h53070a2v8c4er.apps.googleusercontent.com" //from https://console.cloud.google.com/apis/credentials?project=lesroisdelareno
+
   },
 
   /* représente les données d'un créneaux spécifique en BD */
