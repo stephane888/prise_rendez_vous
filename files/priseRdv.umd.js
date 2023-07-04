@@ -77303,8 +77303,8 @@ var HomeViewvue_type_template_id_c80f6c40_render = function render() {
 
 var HomeViewvue_type_template_id_c80f6c40_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=54de7b3f&
-var CardAppointmentvue_type_template_id_54de7b3f_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=31a20f65&
+var CardAppointmentvue_type_template_id_31a20f65_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77457,7 +77457,16 @@ var CardAppointmentvue_type_template_id_54de7b3f_render = function render() {
       "action-after-login": "emit_even",
       "model-register-form": "generate_password",
       "action-after-register": "emit_even_register"
-    }
+    },
+    scopedSlots: _vm._u([{
+      key: "condition_utilisation",
+      fn: function () {
+        return [_c('div', {
+          staticClass: "d-none"
+        }, [_vm._v("...")])];
+      },
+      proxy: true
+    }], null, false, 1223690453)
   })], 1) : _vm._e(), _vm.$store.state.connected && !_vm.$store.state.alreadyConnected ? _c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -77475,7 +77484,7 @@ var CardAppointmentvue_type_template_id_54de7b3f_render = function render() {
   }, [_vm._v("Final")]), _c('recapitulation-options')], 1), _c('div', [_c('pop-up-modal')], 1)]);
 };
 
-var CardAppointmentvue_type_template_id_54de7b3f_staticRenderFns = [function () {
+var CardAppointmentvue_type_template_id_31a20f65_staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77488,7 +77497,7 @@ var CardAppointmentvue_type_template_id_54de7b3f_staticRenderFns = [function () 
   }, [_vm._v("Connected!")])])]);
 }];
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=54de7b3f&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=31a20f65&
 
 ;// CONCATENATED MODULE: ./node_modules/vuex/dist/vuex.esm.js
 
@@ -101256,10 +101265,10 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 });
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CardAppointmentvue_type_script_lang_js_ = (CardAppointmentvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=54de7b3f&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=31a20f65&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=54de7b3f&prod&lang=scss&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=31a20f65&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue
 
@@ -101272,8 +101281,8 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
 var CardAppointment_component = (0,componentNormalizer/* default */.Z)(
   components_CardAppointmentvue_type_script_lang_js_,
-  CardAppointmentvue_type_template_id_54de7b3f_render,
-  CardAppointmentvue_type_template_id_54de7b3f_staticRenderFns,
+  CardAppointmentvue_type_template_id_31a20f65_render,
+  CardAppointmentvue_type_template_id_31a20f65_staticRenderFns,
   false,
   null,
   null,
