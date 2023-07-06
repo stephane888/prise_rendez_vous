@@ -323,6 +323,7 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
       'type' => 'string_textfield',
       'weight' => -4
     ])->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE);
+    
     /**
      * Reprensente l'entite ou la reservation s'accroche.
      */

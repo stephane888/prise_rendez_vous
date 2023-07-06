@@ -12,6 +12,56 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
 /**
+ * Update value max_length from 50 to 250.
+ *
+ * implement hook_update_8001
+ *
+ * @see https://www.drupal.org/node/2554097
+ */
+function __prise_rendez_vous_update_name_max_length($entity_type_id) {
+  // Retrieve existing field data.
+  $database = \Drupal::database();
+  $names = $database->select($entity_type_id . '_field_data', 'et')->fields('et', [
+    'id',
+    'langcode',
+    'name'
+  ])->execute()->fetchAll(\PDO::FETCH_ASSOC);
+  // Remove data from the column.
+  $database->update($entity_type_id . '_field_data')->fields([
+    'name' => NULL
+  ])->execute();
+  // Remove old definition field.
+  $updateManager = \Drupal::entityDefinitionUpdateManager();
+  $storagedef = $updateManager->getFieldStorageDefinition('name', $entity_type_id);
+  $updateManager->uninstallFieldStorageDefinition($storagedef);
+  // Load new definition field in code.
+  /**
+   *
+   * @var \Drupal\Core\Entity\EntityFieldManager $fieldManager
+   */
+  $fieldManager = \Drupal::service('entity_field.manager');
+  $fields = $fieldManager->getFieldStorageDefinitions($entity_type_id);
+  $updateManager->installFieldStorageDefinition('name', $entity_type_id, "prise_rendez_vous", $fields['name']);
+  // Restore entity data in the new schema.
+  foreach ($names as $name) {
+    $database->update($entity_type_id . '_field_data')->fields([
+      'name' => $name['name']
+    ])->condition('id', $name['id'])->condition('langcode', $name['langcode'])->execute();
+  }
+}
+
+/**
+ * Update value max_length from 50 to 250.
+ *
+ * implement hook_update_8001
+ *
+ * @see https://www.drupal.org/node/2554097
+ */
+function prise_rendez_vous_update_8001() {
+  __prise_rendez_vous_update_name_max_length('submit_rdv_entity');
+}
+
+/**
  * Implements hook_form_BASE_FORM_ID_alter().
  */
 function prise_rendez_vous_form_node_type_form_alter(&$form, FormStateInterface $form_state) {
@@ -97,44 +147,6 @@ function _prise_rendez_vous_submitRedirectRdvForm(&$form, FormStateInterface $fo
   ]);
 }
 
-/**
- * implement hook_entity_base_field_info
- *
- * @param EntityTypeInterface $entity_type
- */
-function prise_rendez_vous_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-  $entities = [
-    'dis_period_entity',
-    'equipes_entity',
-    'submit_rdv_entity'
-  ];
-  if (in_array($entity_type->id(), $entities)) {
-    if (\Drupal::moduleHandler()->moduleExists('domain')) {
-      __prise_rendez_vous_fields_domain($fields);
-    }
-  }
-  return $fields;
-}
 
-/**
- *
- * @param array $fields
- */
-function __prise_rendez_vous_fields_domain(array &$fields) {
-  $field_access = \Drupal\domain_access\DomainAccessManagerInterface::DOMAIN_ACCESS_FIELD;
-  $field_source = \Drupal\domain_source\DomainSourceElementManagerInterface::DOMAIN_SOURCE_FIELD;
-  //
-  $fields[$field_access] = BaseFieldDefinition::create('entity_reference')->setLabel(t("Domain access"))->setTranslatable(false)->setDisplayOptions('form', [
-    'type' => 'select2_entity_reference',
-    'weight' => 40,
-    'settings' => [
-      'autocomplete' => true
-    ]
-  ])->setSetting('handler', 'default')->setSetting('target_type', 'domain')->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setDefaultValueCallback('\Drupal\creation_site_virtuel\CreationSiteVirtuel::getActiveDomain');
-  //
-  $fields[$field_source] = BaseFieldDefinition::create('entity_reference')->setLabel(t("Domain source"))->setDisplayOptions('form', [
-    'type' => 'options_select',
-    'weight' => 40
-  ])->setSetting('handler', 'default')->setSetting('target_type', 'domain')->setDisplayConfigurable('form', TRUE)->setDisplayConfigurable('view', TRUE)->setTranslatable(false);
-}
+
+

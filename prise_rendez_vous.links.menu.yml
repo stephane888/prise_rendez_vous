@@ -3,54 +3,57 @@ prise_rendez_vous.settings_form:
   description: 'Configure prise rendez vous.'
   parent: system.admin_config_system
   route_name: prise_rendez_vous.settings_form
-  weight: 10
+  weight: 40
 
 # Rdv config entity menu items definition
 entity.rdv_config_entity.collection:
   title: 'Rdv config entity'
   route_name: entity.rdv_config_entity.collection
   description: 'List Rdv config entity (bundles)'
-  parent: system.admin_structure
-  weight: 99
+  parent: system.admin_content
+  weight: 40
 
 # Disable periode entity menu items definition
 entity.dis_period_entity.collection:
   title: 'Disable periode entity list'
   route_name: entity.dis_period_entity.collection
   description: 'List Disable periode entity entities'
-  parent: system.admin_structure
-  weight: 100
+  parent: system.admin_content
+  weight: 40
 
 dis_period_entity.admin.structure.settings:
   title: 'Disable periode entity settings'
   description: 'Configure Disable periode entity entities'
   route_name: dis_period_entity.settings
   parent: system.admin_structure
+  weight: 40
 
 # Submit rdv entity menu items definition
 entity.submit_rdv_entity.collection:
   title: 'Submit rdv entity list'
   route_name: entity.submit_rdv_entity.collection
   description: 'List Submit rdv entity entities'
-  parent: system.admin_structure
-  weight: 100
+  parent: system.admin_content
+  weight: 40
 
 submit_rdv_entity.admin.structure.settings:
   title: 'Submit rdv entity settings'
   description: 'Configure Submit rdv entity entities'
   route_name: submit_rdv_entity.settings
   parent: system.admin_structure
+  weight: 40
 
 # Equipes entity menu items definition
 entity.equipes_entity.collection:
   title: 'Equipes entity list'
   route_name: entity.equipes_entity.collection
   description: 'List Equipes entity entities'
-  parent: system.admin_structure
-  weight: 100
+  parent: system.admin_content
+  weight: 40
 
 equipes_entity.admin.structure.settings:
   title: 'Equipes entity settings'
   description: 'Configure Equipes entity entities'
   route_name: equipes_entity.settings
   parent: system.admin_structure
+  weight: 40
