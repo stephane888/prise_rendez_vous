@@ -52,12 +52,6 @@ class PriseRendezVousSettingsForm extends ConfigFormBase {
         // Le veritable test doit consister à verifier si l'utilisateur à
         // activer la surcharger de la configuration.
         if (!empty($configs['id'])) {
-          if ($configs['id'] == $id) {
-            $configs['id'] = $id = $domain->id();
-            $configs['label'] = $label = $domain->getHostname();
-          }
-        }
-        else {
           $configs['id'] = $id = $domain->id();
           $configs['label'] = $label = $domain->getHostname();
         }
