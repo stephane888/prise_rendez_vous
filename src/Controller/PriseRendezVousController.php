@@ -103,7 +103,6 @@ class PriseRendezVousController extends ControllerBase {
           $submitEntity = reset($submitEntities);
           $results['submit_rdv_entity_id'] = $submitEntity->id();
         }
-        return [];
         return HttpResponse::response($results);
       }
       else

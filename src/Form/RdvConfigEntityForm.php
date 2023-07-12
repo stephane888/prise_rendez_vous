@@ -171,7 +171,7 @@ class RdvConfigEntityForm extends EntityForm {
     // }
     // }
     // $entity->save();
-    $form_state->setRedirectUrl($rdv_config_entity->toUrl('collection'));
+    // $form_state->setRedirectUrl($rdv_config_entity->toUrl('collection'));
   }
   
 }
