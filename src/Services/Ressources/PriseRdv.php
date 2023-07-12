@@ -67,7 +67,7 @@ class PriseRdv extends ControllerBase {
       $dayConf = $confs['jours'][$runDateDay->format('w')];
       $result['jours'][] = [
         'label' => $runDateDay->format("D.") . '<br>' . $runDateDay->format("j M"),
-        'value' => $runDateDay->format("D j M Y"),
+        'value' => $runDateDay->format("Y-m-d"),
         'date' => $runDateDay->format("Y-m-d H:i:s"),
         'conf' => $dayConf,
         'creneau' => $dayConf['status'] ? $this->buildCreneauOfDay($runDateDay, $dateToday, $confs, $dayConf, $result['unvalable'], $result['equipes_options']) : []
