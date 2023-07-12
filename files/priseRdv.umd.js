@@ -77303,8 +77303,8 @@ var HomeViewvue_type_template_id_c80f6c40_render = function render() {
 
 var HomeViewvue_type_template_id_c80f6c40_staticRenderFns = [];
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=94f0efa0&
-var CardAppointmentvue_type_template_id_94f0efa0_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=template&id=92ff50c2&
+var CardAppointmentvue_type_template_id_92ff50c2_render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77484,7 +77484,7 @@ var CardAppointmentvue_type_template_id_94f0efa0_render = function render() {
   }, [_vm._v("Final")]), _c('recapitulation-options')], 1), _c('div', [_c('pop-up-modal')], 1)]);
 };
 
-var CardAppointmentvue_type_template_id_94f0efa0_staticRenderFns = [function () {
+var CardAppointmentvue_type_template_id_92ff50c2_staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
@@ -77497,7 +77497,7 @@ var CardAppointmentvue_type_template_id_94f0efa0_staticRenderFns = [function () 
   }, [_vm._v("Connected!")])])]);
 }];
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=94f0efa0&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=template&id=92ff50c2&
 
 ;// CONCATENATED MODULE: ./node_modules/vuex/dist/vuex.esm.js
 
@@ -101126,8 +101126,6 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
         clearInterval(inter);
       }
     }, 100); //
-
-    this.$store.dispatch("loadChoisesOfuser");
   },
 
   computed: { ...mapState({
@@ -101150,14 +101148,19 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
     check_if_user_connected() {
       document.addEventListener("login_rx_vuejs__user_is_login", () => {
-        users.getCurrentUser().then(user => {
-          if (user) {
-            this.$store.dispatch("setConnected", {
-              connected: true,
-              already: false
-            });
-          }
-        });
+        if (this.$store.state.entity_type == "commerce_order") {
+          // Si l'utilisateur viens de se connecter on recharge la page afin de mettre à jour le formulaire checkout.
+          window.location.reload();
+        } else {
+          users.getCurrentUser().then(user => {
+            if (user) {
+              this.$store.dispatch("setConnected", {
+                connected: true,
+                already: false
+              });
+            }
+          });
+        }
       }, false);
     },
 
@@ -101266,10 +101269,10 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 });
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_CardAppointmentvue_type_script_lang_js_ = (CardAppointmentvue_type_script_lang_js_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=94f0efa0&prod&lang=scss&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-64.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-64.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-64.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-64.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/CardAppointment.vue?vue&type=style&index=0&id=92ff50c2&prod&lang=scss&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=94f0efa0&prod&lang=scss&
+;// CONCATENATED MODULE: ./src/components/CardAppointment.vue?vue&type=style&index=0&id=92ff50c2&prod&lang=scss&
 
 ;// CONCATENATED MODULE: ./src/components/CardAppointment.vue
 
@@ -101282,8 +101285,8 @@ var PopUpModal_component = (0,componentNormalizer/* default */.Z)(
 
 var CardAppointment_component = (0,componentNormalizer/* default */.Z)(
   components_CardAppointmentvue_type_script_lang_js_,
-  CardAppointmentvue_type_template_id_94f0efa0_render,
-  CardAppointmentvue_type_template_id_94f0efa0_staticRenderFns,
+  CardAppointmentvue_type_template_id_92ff50c2_render,
+  CardAppointmentvue_type_template_id_92ff50c2_staticRenderFns,
   false,
   null,
   null,
@@ -101646,7 +101649,7 @@ const state = {
           entity_type: state.entity_type,
           selected: state.selected
         };
-        window.sessionStorage.setItem("calendar_appoint_selected", JSON.stringify(val));
+        window.localStorage.setItem("calendar_appoint_selected", JSON.stringify(val));
       }, 300);
     },
 
@@ -101658,7 +101661,7 @@ const state = {
       state,
       commit
     }) {
-      var v = window.sessionStorage.getItem("calendar_appoint_selected");
+      var v = window.localStorage.getItem("calendar_appoint_selected");
 
       if (v) {
         const val = JSON.parse(v);
@@ -101668,8 +101671,6 @@ const state = {
             commit("SET_SELECTED_CRENEAUX", val.selected.creneau);
             commit("SET_SELECTED_EQUIPE", val.selected.equipe);
           }
-        } else {
-          window.sessionStorage.removeItem("calendar_appoint_selected");
         }
       }
     },
@@ -105406,7 +105407,9 @@ new (external_commonjs_vue_commonjs2_vue_root_Vue_default())({
     this.$store.state.entity_id = this.entity_id;
     this.$store.state.entity_type = this.entity_type;
     this.$store.state.entity_type_id = this.entity_type_id;
-    this.getDatas();
+    this.getDatas(); //
+
+    this.$store.dispatch("loadChoisesOfuser");
   },
 
   render: h => h(App, {
