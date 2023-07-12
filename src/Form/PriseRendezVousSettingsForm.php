@@ -163,34 +163,6 @@ class PriseRendezVousSettingsForm extends ConfigFormBase {
     $confs->set('url_redirect', $form_state->getValue('url_redirect'));
     $confs->save();
     parent::submitForm($form, $form_state);
-  /**
-   * On verifie si l'entité RdvConfigEntity existe deja, non on le cre et on
-   * redire l'utilisateur pour affiner la configuration
-   */
-  /**
-   * L'entite cree à ce niveau n'est pas editable, mais cela smble etre du a la
-   * redirection.
-   */
-    // $confEntity = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($id
-    // . 'ee');
-    // if (!$confEntity) {
-    // // $confEntity =
-    // // \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::create();
-    // // $confEntity->set('id', $id);
-    // // $confEntity->set('label', $label);
-    // // $confEntity->set('jours',
-    // // \Drupal\prise_rendez_vous\PriseRendezVousInterface::jours);
-    // // $confEntity->save();
-    // /**
-    // *
-    // * @var \Drupal\Core\Config\Entity\ConfigEntityStorage $configStorage
-    // */
-    
-    // //
-    // // $form_state->setRedirect('entity.rdv_config_entity.edit_form', [
-    // // 'rdv_config_entity' => $enti2->id()
-    // // ]);
-    // }
   }
   
 }

@@ -84,7 +84,6 @@ class PriseRendezVousController extends ControllerBase {
    */
   public function LoadDefaultConfigsCreneauRdv(string $entity_type_id, $entity_id) {
     try {
-      
       $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
       if (!empty($content['id']) && $entity = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id'])) {
         
