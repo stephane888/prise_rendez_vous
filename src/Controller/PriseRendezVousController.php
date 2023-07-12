@@ -78,13 +78,16 @@ class PriseRendezVousController extends ControllerBase {
   /**
    * Charge la configuration par defautl.
    *
+   * @see #tache /mdoule_drupal_9_2023_4_360/144/24
+   *     
    * @return \Symfony\Component\HttpFoundation\JsonResponse
    */
   public function LoadDefaultConfigsCreneauRdv(string $entity_type_id, $entity_id) {
     try {
+      
       $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
-      dump($content);
       if (!empty($content['id']) && $entity = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id'])) {
+        
         $creneaux = $this->PriseRdv->getDatasRdv($entity);
         $results = [
           'data_creneaux' => $creneaux,
@@ -101,6 +104,7 @@ class PriseRendezVousController extends ControllerBase {
           $submitEntity = reset($submitEntities);
           $results['submit_rdv_entity_id'] = $submitEntity->id();
         }
+        return [];
         return HttpResponse::response($results);
       }
       else
@@ -150,8 +154,8 @@ class PriseRendezVousController extends ControllerBase {
         $values = [
           'name' => $content->label(),
           'creneau' => [
-            'value' => $day->setTime($time[0], $time[1])->format("Y-m-d\TH-i-s"),
-            'end_value' => $day->modify("+ " . $BaseConfig["interval"] . " minutes")->format("Y-m-d\TH-i-s")
+            'value' => $day->setTime($time[0], $time[1])->format("Y-m-d\TH:i:s"),
+            'end_value' => $day->modify("+ " . $BaseConfig["interval"] . " minutes")->format("Y-m-d\TH:i:s")
           ],
           'creneau_string' => $datas['creneau']['value'],
           'rdv_config_entity' => $datas['rdv_config_entity'],

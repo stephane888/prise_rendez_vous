@@ -51,70 +51,69 @@ use Drupal\Core\Entity\EntityStorageInterface;
  * )
  */
 class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterface {
-
+  
   /**
    * The Rdv config entity ID.
    *
    * @var string
    */
   protected $id;
-
+  
   /**
    * The Rdv config entity label.
    *
    * @var string
    */
   protected $label;
-
+  
   /**
    * Le format de durée ( minutes, heures, jours ).
    *
    * @var string
    */
   protected $format_time;
-
+  
   /**
    * Jours activé par defaut.
    *
    * @var array
    */
   protected $jours = [];
-
+  
   /**
    * Durée d'un creneau
    *
    * @var integer
    */
   protected $interval = 60;
-
+  
   /**
    * Decalage entre deux creneaux.
    *
    * @var integer
    */
   protected $decalage = 0;
-
+  
   /**
    * Nombre de semaine à afficher
    *
    * @var integer
    */
   protected $number_week = 3;
-
+  
   /**
    * Limitation du nombre de reservation par equipe ou par personne.
    *
    * @var integer
    */
   protected $limit_reservation = 1;
-
+  
   /**
    *
    * {@inheritdoc}
    * @see \Drupal\Core\Config\Entity\ConfigEntityBase::preSave()
    */
   public function preSave(EntityStorageInterface $storage) {
-    parent::preSave($storage);
     $jours = $this->get('jours');
     if (!empty($jours))
       foreach ($jours as $k => $val) {
@@ -132,6 +131,7 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
         }
       }
     $this->set('jours', $jours);
+    parent::preSave($storage);
   }
-
+  
 }

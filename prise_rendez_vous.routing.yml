@@ -51,14 +51,15 @@ prise_rendez_vous.settings_form:
     _permission: 'Administer prise_rendez_vous configuration'
     
 prise_rendez_vous.default_settings_form:
-  path: '/prise-rendez-vous/default-settings'
+  path: '/admin/config/prise-rendez-vous/default-settings'
   defaults:
     _title: 'prise rendez vous settings'
     _form: 'Drupal\prise_rendez_vous\Form\PriseRendezVousSettingsForm'
   requirements:
     _permission: 'admin_default_configuration'
-    
-    
+  options:
+    no_cache: 'TRUE'
+
 prise_rendez_vous.load_default_configs:
   path: '/prise-rendez-vous/load-default-configs/{entity_type_id}/{entity_id}'
   defaults:
@@ -67,5 +68,5 @@ prise_rendez_vous.load_default_configs:
   requirements:
     _permission: 'access content'   
     
-
+ 
 

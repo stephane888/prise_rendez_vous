@@ -9,16 +9,43 @@ use Drupal\Core\Form\FormStateInterface;
  * Class RdvConfigEntityForm.
  */
 class RdvConfigEntityForm extends EntityForm {
-
+  
   /**
    *
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-
+    
     $rdv_config_entity = $this->entity;
     // dump($this->entity->toArray());
+    /**
+     *
+     * @var \Drupal\Core\Config\Entity\ConfigEntityStorage $configStorage
+     */
+    $configStorage = \Drupal::entityTypeManager()->getStorage("rdv_config_entity");
+    $id = $rdv_config_entity->id();
+    
+    /**
+     *
+     * @var \Drupal\prise_rendez_vous\Entity\RdvConfigEntity $entity
+     */
+    if ($id) {
+      $entity = $configStorage->load($rdv_config_entity->id());
+      // dump($entity->toArray());
+    }
+    
+    // $entity->set('limit_reservation', 6);
+    // $entity->save();
+    // $entity->getCacheMaxAge();
+    // dump($entity->get('limit_reservation'));
+    // dump($rdv_config_entity->get('limit_reservation'));
+    // dump($entity->toArray());
+    // $entity2 =
+    // \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load("salon_coiffure_wb_horizon_kksa");
+    // $entity2->set('limit_reservation', 5);
+    // $entity2->save();
+    // dump($entity2->toArray());
     $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
@@ -27,7 +54,7 @@ class RdvConfigEntityForm extends EntityForm {
       '#description' => $this->t("Label for the Rdv config entity."),
       '#required' => TRUE
     ];
-
+    
     $form['id'] = [
       '#type' => 'machine_name',
       '#default_value' => $rdv_config_entity->id(),
@@ -36,7 +63,7 @@ class RdvConfigEntityForm extends EntityForm {
       ],
       '#disabled' => !$rdv_config_entity->isNew()
     ];
-
+    
     /* You will need additional form elements for your custom properties. */
     $jours = \Drupal\prise_rendez_vous\PriseRendezVousInterface::jours;
     if (!empty($rdv_config_entity->get('jours'))) {
@@ -101,7 +128,7 @@ class RdvConfigEntityForm extends EntityForm {
     //
     return $form;
   }
-
+  
   /**
    *
    * {@inheritdoc}
@@ -109,20 +136,42 @@ class RdvConfigEntityForm extends EntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $rdv_config_entity = $this->entity;
     $status = $rdv_config_entity->save();
-
     switch ($status) {
       case SAVED_NEW:
         $this->messenger()->addMessage($this->t('Created the %label Rdv config entity.', [
           '%label' => $rdv_config_entity->label()
         ]));
         break;
-
+      
       default:
         $this->messenger()->addMessage($this->t('Saved the %label Rdv config entity.', [
           '%label' => $rdv_config_entity->label()
         ]));
     }
+    // /**
+    // * On a comportement les plus bizare:
+    // * Les données creers manuelement ne sont pas MAJ via le formulaire, en
+    // fait
+    // * on se retrouve avec deux entrees.
+    // * ( l'un probablement est un cache ).
+    // */
+    // $newValue = $this->entity->toArray();
+    // $ignoreFields = [
+    // "uuid",
+    // "langcode",
+    // 'dependencies',
+    // 'id'
+    // ];
+    // $entity =
+    // \Drupal::entityTypeManager()->getStorage("rdv_config_entity")->load($rdv_config_entity->id());
+    // foreach ($newValue as $k => $value) {
+    // if (!in_array($k, $ignoreFields)) {
+    // $entity->set($k, $value);
+    // \Drupal::messenger()->addStatus('save field ' . $k);
+    // }
+    // }
+    // $entity->save();
     $form_state->setRedirectUrl($rdv_config_entity->toUrl('collection'));
   }
-
+  
 }

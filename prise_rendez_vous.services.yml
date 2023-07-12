@@ -13,7 +13,7 @@ services:
     
   prise_rendez_vous.manage.PriseRdv:
     class: Drupal\prise_rendez_vous\Services\Ressources\PriseRdv
-    arguments: []
+    arguments: ['@entity_type.manager','@domain.negotiator']
     
   prise_rendez_vous.manage.saveRdv:
     class: Drupal\prise_rendez_vous\Services\Ressources\SaveRdvEntityService
