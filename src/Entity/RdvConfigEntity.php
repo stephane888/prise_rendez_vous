@@ -146,4 +146,8 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
     parent::preSave($storage);
   }
   
+  public function getUid() {
+    return $this->uid;
+  }
+  
 }

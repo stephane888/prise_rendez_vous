@@ -151,8 +151,8 @@ class PriseRendezVousController extends ControllerBase {
        */
       $content = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
       if ($content && !empty($datas['creneau'])) {
-        $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
-        $BaseConfig = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id']);
+        $config = ConfigDrupal::config('prise_rendez_vous.default_configs');
+        $BaseConfig = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($config['id']);
         if ($BaseConfig) {
           $BaseConfig = $BaseConfig->toArray();
         }
@@ -197,7 +197,7 @@ class PriseRendezVousController extends ControllerBase {
         $message .= "<br>";
         $message .= '<a href="#"> Voir les details </a>';
         // Envoit du mail au proprietaire du site web.
-        if ($BaseConfig['uid']) {
+        if (!empty($BaseConfig['uid'])) {
           $user = \Drupal\user\Entity\User::load($BaseConfig['uid']);
           $to = $user->getEmail();
           $subject = $RdvEntity->isNew() ? "Vous avez une nouveau RDV (No:" . $RdvEntity->id() . ")" : "Le RDV (No:" . $RdvEntity->id() . ") a été modifié par l'utilisateur";

@@ -16,7 +16,10 @@ class RdvConfigEntityForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-    
+    /**
+     *
+     * @var \Drupal\prise_rendez_vous\Entity\RdvConfigEntity $rdv_config_entity
+     */
     $rdv_config_entity = $this->entity;
     // dump($this->entity->toArray());
     /**
@@ -126,6 +129,17 @@ class RdvConfigEntityForm extends EntityForm {
       '#default_value' => $rdv_config_entity->get('number_week')
     ];
     //
+    
+    $form['uid'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('user id'),
+      '#maxlength' => 255,
+      '#default_value' => $rdv_config_entity->getUid(),
+      '#description' => $this->t("read only"),
+      '#attributes' => [
+        'readonly' => 'readonly'
+      ]
+    ];
     return $form;
   }
   
