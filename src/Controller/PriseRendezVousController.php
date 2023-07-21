@@ -12,6 +12,8 @@ use Drupal\prise_rendez_vous\Services\Ressources\PriseRdv;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Stephane888\DrupalUtility\HttpResponse;
 use Stephane888\Debug\Repositories\ConfigDrupal;
+use Symfony\Component\Mime\Header\MailboxHeader;
+use Symfony\Component\Mime\Address;
 
 /**
  * Returns responses for prise rendez vous routes.
@@ -86,7 +88,6 @@ class PriseRendezVousController extends ControllerBase {
     try {
       $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
       if (!empty($content['id']) && $entity = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id'])) {
-        
         $creneaux = $this->PriseRdv->getDatasRdv($entity);
         $results = [
           'data_creneaux' => $creneaux,
@@ -144,9 +145,21 @@ class PriseRendezVousController extends ControllerBase {
   public function SaveSouscriptionRdv(Request $request, string $entity_type_id, $entity_id) {
     try {
       $datas = Json::decode($request->getContent());
+      /**
+       *
+       * @var \Drupal\commerce_order\Entity\Order $content
+       */
       $content = $this->entityTypeManager()->getStorage($entity_type_id)->load($entity_id);
       if ($content && !empty($datas['creneau'])) {
-        $BaseConfig = $this->PriseRendezEntiy->getConfigEntity($content)->toArray();
+        $content = ConfigDrupal::config('prise_rendez_vous.default_configs');
+        $BaseConfig = \Drupal\prise_rendez_vous\Entity\RdvConfigEntity::load($content['id']);
+        if ($BaseConfig) {
+          $BaseConfig = $BaseConfig->toArray();
+        }
+        else {
+          throw new \Exception("Le contenu n'est pas definit ...");
+        }
+        
         $day = new \DateTime($datas['creneau']['date']);
         $time = explode(":", $datas['creneau']['value']);
         $values = [
@@ -166,6 +179,37 @@ class PriseRendezVousController extends ControllerBase {
           $values['id'] = $datas['submit_rdv_entity_id'];
         $RdvEntity = $this->PriseRendezEntiy->SaveRdvEntityService->saveRdv($values);
         // $this->PriseRendezEntiy->SaveRdvEntityService->saveRdv($values);
+        // apres sauvegarde on envoit le mail.
+        $message = "<h3>Prise de rendez-vous</h3>";
+        $message .= "<br>";
+        $message .= "<br>";
+        $message .= "<h4>Date</h3>";
+        $message .= "<p>";
+        $message .= $values['creneau']['value'] . ' - ' . $values['creneau']['end_value'];
+        $message .= "</p>";
+        $message .= "<br>";
+        $message .= "<br>";
+        $message .= "<h4>Creneau</h3>";
+        $message .= "<p>";
+        $message .= $values['creneau_string'];
+        $message .= "</p>";
+        $message .= "<br>";
+        $message .= "<br>";
+        $message .= '<a href="#"> Voir les details </a>';
+        // Envoit du mail au proprietaire du site web.
+        if ($BaseConfig['uid']) {
+          $user = \Drupal\user\Entity\User::load($BaseConfig['uid']);
+          $to = $user->getEmail();
+          $subject = $RdvEntity->isNew() ? "Vous avez une nouveau RDV (No:" . $RdvEntity->id() . ")" : "Le RDV (No:" . $RdvEntity->id() . ") a été modifié par l'utilisateur";
+          $this->sendMail($to, $subject, $message);
+        }
+        // envoit du mail à l'utilisateur actif.
+        if ($uid = \Drupal::currentUser()->id()) {
+          $user = \Drupal\user\Entity\User::load($uid);
+          $to = $user->getEmail();
+          $subject = $RdvEntity->isNew() ? "Votre RDV (No:" . $RdvEntity->id() . ")" : "Vous avez modifier votre RDV (No:" . $RdvEntity->id() . ")";
+          $this->sendMail($to, $subject, $message);
+        }
         return $this->reponse([
           'rdvEntyity' => $RdvEntity->toArray(),
           'values' => $values
@@ -175,6 +219,58 @@ class PriseRendezVousController extends ControllerBase {
     }
     catch (\Exception $e) {
       return $this->reponse(ExceptionExtractMessage::errorAll($e), 435, $e->getMessage());
+    }
+  }
+  
+  /**
+   * Pour l'envoit de mail on charger le plugin.mail configurer par defaut via
+   * le
+   * module MailSystem.
+   *
+   * @param string $to
+   * @param string $password
+   */
+  protected function sendMail($to, $subject, $message) {
+    $prise_rendez_vous = ConfigDrupal::config('prise_rendez_vous.settings');
+    if (!empty($prise_rendez_vous['send_mail'])) {
+      $siteInfo = ConfigDrupal::config('system.site');
+      $mailSystem = ConfigDrupal::config('mailsystem.settings');
+      
+      /**
+       * On initialise le chargeur de plugin de mail.
+       *
+       * @var \Drupal\Core\Mail\MailManager $PluginMailManger
+       */
+      $PluginMailManger = \Drupal::service('plugin.manager.mail');
+      
+      /**
+       * On recupere l'instance à partir de l'id du plugin.
+       *
+       * @var \Drupal\Core\Mail\MailInterface $mailPlugin
+       */
+      $mailPlugin = $PluginMailManger->createInstance($mailSystem['defaults']['sender']);
+      // $module = 'login_rx_vuejs';
+      $key = 'prise_rendez_vous';
+      $datas = [
+        'id' => $key,
+        'to' => $to,
+        'subject' => $subject,
+        'body' => $message,
+        'headers' => [
+          'From' => $siteInfo['mail'],
+          'Sender' => $siteInfo['mail'],
+          'Return-Path' => $siteInfo['mail']
+        ]
+      ];
+      $mailbox = new MailboxHeader('From', new Address($siteInfo['mail'], $siteInfo['name']));
+      $datas['headers']['From'] = $mailbox->getBodyAsString();
+      $result = $mailPlugin->mail($datas);
+      if (!$result) {
+        $message = t(' There was a problem sending your email notification to @email. ', [
+          '@email' => $to
+        ]);
+        $this->getLogger('prise_rendez_vous')->alert($message);
+      }
     }
   }
   

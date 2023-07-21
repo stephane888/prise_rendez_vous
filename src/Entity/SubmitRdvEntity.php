@@ -138,6 +138,19 @@ class SubmitRdvEntity extends EditorialContentEntityBase implements SubmitRdvEnt
     }
   }
   
+  /**
+   *
+   * {@inheritdoc}
+   * @see \Drupal\Core\Entity\ContentEntityBase::postSave()
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+  
+  /**
+   *
+   * @return boolean
+   */
   public function checkIfEntityReferenceIsvalid() {
     $entity_type = $this->getEntityTypeManager()->getStorage($this->get('entity_type')->value);
     if ($entity_type) {

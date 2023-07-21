@@ -32,7 +32,8 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "interval",
  *     "decalage",
  *     "number_week",
- *     "limit_reservation"
+ *     "limit_reservation",
+ *     "uid"
  *   },
  *   config_prefix = "rdv_config_entity",
  *   admin_permission = "administer site configuration",
@@ -110,10 +111,21 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
   
   /**
    *
+   * @var integer
+   */
+  protected $uid = 0;
+  
+  /**
+   *
    * {@inheritdoc}
    * @see \Drupal\Core\Config\Entity\ConfigEntityBase::preSave()
    */
   public function preSave(EntityStorageInterface $storage) {
+    // $uid. (L'uid de celui qui a cree le formulaire).
+    if (!$this->uid) {
+      $this->uid = \Drupal::currentUser()->id();
+    }
+    // Parse jours.
     $jours = $this->get('jours');
     if (!empty($jours))
       foreach ($jours as $k => $val) {
