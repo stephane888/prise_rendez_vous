@@ -82,11 +82,13 @@ class PriseRendezVousSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
-    return [
-      DuplicateEntityEvent::EVENT_NAME => [
-        'DuplicateEntity'
-      ]
-    ];
+    // on desactive ceci afin de s'assurer de son utilité.
+    // return [
+    // DuplicateEntityEvent::EVENT_NAME => [
+    // 'DuplicateEntity'
+    // ]
+    // ];
+    return [];
   }
   
 }
