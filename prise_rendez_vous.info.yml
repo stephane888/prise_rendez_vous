@@ -6,3 +6,4 @@ core_version_requirement: ^9 || ^10
 dependencies:
   - domain:domain
   - domain:domain_access
+  - drupal:datetime_range
