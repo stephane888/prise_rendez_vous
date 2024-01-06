@@ -121,7 +121,7 @@ class RdvConfigEntity extends ConfigEntityBase implements RdvConfigEntityInterfa
    * @see \Drupal\Core\Config\Entity\ConfigEntityBase::preSave()
    */
   public function preSave(EntityStorageInterface $storage) {
-    // $uid. (L'uid de celui qui a cree le formulaire).
+    // $uid. ( L'uid de celui qui a cree le formulaire ).
     if (!$this->uid) {
       $this->uid = \Drupal::currentUser()->id();
     }
